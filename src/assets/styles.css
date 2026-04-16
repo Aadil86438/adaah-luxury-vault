@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary-color: #E6A79B;
+  --secondary-color: #D97A6C;
+  --bg-light: #FAF7F2;
+  --text-dark: #4A3F35;
+  --accent-green: #A8B88A;
+  --bg-dark: #121212;
+  --surface-dark: #1E1E1E;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.luxury-text {
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.premium-card {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border-radius: 16px !important;
+}
+
+.premium-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.1), 0 10px 10px rgba(0,0,0,0.08) !important;
+}
+
+.v-btn {
+  text-transform: none !important;
+  letter-spacing: 0.5px !important;
+  font-weight: 500 !important;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+
+/* Glassmorphism */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.dark-mode .glass-effect {
+  background: rgba(30, 30, 30, 0.7) !important;
+}
