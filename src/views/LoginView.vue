@@ -1,14 +1,23 @@
 <template>
-  <v-container class="fill-height justify-center align-center py-12">
-    <v-card width="100%" max-width="450" class="premium-card pa-8 border" flat>
-      <div class="text-center mb-8">
-        <h1 class="luxury-text mb-2">Welcome Back</h1>
-        <p class="text-body-2 opacity-70">Sign in to your Adaah account</p>
+  <div class="login-page">
+    <div class="login-card">
+      <!-- Brand Mark -->
+      <div class="login-brand">
+        <span class="login-logo serif-text">Adaah</span>
+        <span class="login-tagline luxury-label">Admin Portal</span>
       </div>
 
-      <v-form @submit.prevent="handleLogin" v-model="formValid">
+      <!-- Heading -->
+      <div class="login-heading">
+        <h1 class="login-title serif-text">Welcome Back</h1>
+        <p class="login-subtitle">Sign in to manage your collection</p>
+      </div>
+
+      <!-- Form -->
+      <v-form @submit.prevent="handleLogin" v-model="formValid" class="login-form">
         <v-text-field
           v-model="email"
+          id="login-email"
           label="Email Address"
           type="email"
           variant="outlined"
@@ -16,36 +25,40 @@
           :rules="[v => !!v || 'Email is required', v => /.+@.+\..+/.test(v) || 'Email must be valid']"
           required
           autofocus
-          class="mb-4"
-        ></v-text-field>
+          class="login-input"
+        />
 
         <v-text-field
           v-model="password"
+          id="login-password"
           label="Password"
           type="password"
           variant="outlined"
           density="comfortable"
           :rules="[v => !!v || 'Password is required']"
           required
-          class="mb-6"
-        ></v-text-field>
+          class="login-input"
+        />
 
-        <v-btn
+        <button
+          id="login-submit"
           type="submit"
-          color="primary"
-          block
-          size="large"
-          class="rounded-pill mb-4"
-          :loading="loading"
+          class="btn-terra login-btn"
           :disabled="!formValid || loading"
+          :class="{ disabled: !formValid || loading }"
         >
-          Sign In
-        </v-btn>
-
-        <!-- Registration link removed as per requirement -->
+          <span v-if="loading" class="btn-loading">
+            <v-progress-circular size="16" width="2" indeterminate color="white" />
+            Signing in…
+          </span>
+          <span v-else>Sign In</span>
+        </button>
       </v-form>
-    </v-card>
-  </v-container>
+    </div>
+
+    <!-- Decorative Background -->
+    <div class="login-deco" aria-hidden="true" />
+  </div>
 </template>
 
 <script setup>
@@ -72,7 +85,6 @@ const handleLogin = () => {
       router.push(lIsAdmin ? '/admin' : '/')
     })
     .catch((pError) => {
-      console.error('Login Handler Error:', pError)
       store.dispatch('snackbar/show', { text: pError.message || 'Login failed', color: 'error' })
     })
     .finally(() => {
@@ -80,3 +92,124 @@ const handleLogin = () => {
     })
 }
 </script>
+
+<style scoped>
+.login-page {
+  min-height: calc(100vh - 68px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  padding: 40px 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Decorative Background ── */
+.login-deco {
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(230, 167, 155, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Card ── */
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: 48px 44px 52px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Brand ── */
+.login-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 36px;
+  gap: 6px;
+}
+
+.login-logo {
+  font-size: 2.4rem;
+  color: var(--text-primary);
+  letter-spacing: 0.04em;
+}
+
+.login-tagline {
+  color: var(--primary-hover);
+}
+
+/* ── Heading ── */
+.login-heading {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.login-title {
+  font-size: 1.7rem;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.login-subtitle {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* ── Form ── */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.login-input {
+  /* inherits Vuetify theming via Vuetify theme + CSS vars */
+}
+
+.login-btn {
+  width: 100%;
+  padding: 14px 28px !important;
+  border-radius: var(--radius-md) !important;
+  font-size: 0.95rem;
+  border: none;
+  margin-top: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.login-btn.disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 40px 28px 44px;
+  }
+
+  .login-logo {
+    font-size: 2rem;
+  }
+}
+</style>

@@ -1,56 +1,320 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+/* ============================================================
+   ADAAH LUXURY JEWELRY — MASTER DESIGN SYSTEM
+   All design tokens live here. ZERO hardcoded colors elsewhere.
+   ============================================================ */
 
+/* ── Google Fonts (fallback if index.html link is cached) ── */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
+
+/* ============================================================
+   CSS CUSTOM PROPERTIES — LIGHT MODE (default)
+   ============================================================ */
 :root {
-  --primary-color: #E6A79B;
-  --secondary-color: #D97A6C;
-  --bg-light: #FAF7F2;
-  --text-dark: #4A3F35;
-  --accent-green: #A8B88A;
-  --bg-dark: #121212;
-  --surface-dark: #1E1E1E;
+  /* Brand colors */
+  --primary:        #E6A79B;
+  --primary-hover:  #D97A6C;
+  --primary-muted:  rgba(230, 167, 155, 0.12);
+  --label:          #A8B88A;
+
+  /* Backgrounds */
+  --bg:             #FAF7F2;
+  --bg-offset:      #F0EBE1;
+  --card:           #FFFFFF;
+
+  /* Text */
+  --text-primary:   #4A3F35;
+  --text-secondary: #7A6F65;
+  --text-muted:     #9C8F85;
+
+  /* Borders & Shadows */
+  --border:         #E8E2DB;
+  --border-subtle:  rgba(74, 63, 53, 0.1);
+  --shadow-sm:      0 2px 12px rgba(74, 63, 53, 0.06);
+  --shadow-md:      0 6px 24px rgba(74, 63, 53, 0.09);
+  --shadow-lg:      0 14px 44px rgba(74, 63, 53, 0.14);
+  --shadow-card:    0 4px 20px rgba(74, 63, 53, 0.07);
+  --shadow-card-hover: 0 12px 40px rgba(74, 63, 53, 0.14);
+
+  /* Typography */
+  --font-serif:     'Cormorant Garamond', 'Georgia', serif;
+  --font-sans:      'DM Sans', system-ui, sans-serif;
+
+  /* Spacing scale (8px base) */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  80px;
+  --space-10: 96px;
+
+  /* Radius */
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  16px;
+  --radius-xl:  24px;
+  --radius-pill: 100px;
+
+  /* Transitions */
+  --transition-fast:   0.15s ease;
+  --transition-base:   0.28s ease;
+  --transition-slow:   0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================================
+   DARK MODE — triggered by App.vue adding .dark-mode on <html>
+   ============================================================ */
+html.dark-mode {
+  --bg:             #1E1E1E;
+  --bg-offset:      #252525;
+  --card:           #2A2A2A;
+
+  --text-primary:   #F5EDE4;
+  --text-secondary: #B8AFA7;
+  --text-muted:     #8A8078;
+
+  --border:         #3A3A3A;
+  --border-subtle:  rgba(245, 237, 228, 0.08);
+  --shadow-sm:      0 2px 12px rgba(0, 0, 0, 0.22);
+  --shadow-md:      0 6px 24px rgba(0, 0, 0, 0.30);
+  --shadow-lg:      0 14px 44px rgba(0, 0, 0, 0.40);
+  --shadow-card:    0 4px 20px rgba(0, 0, 0, 0.24);
+  --shadow-card-hover: 0 12px 40px rgba(0, 0, 0, 0.40);
+  --primary-muted:  rgba(230, 167, 155, 0.15);
+}
+
+/* ============================================================
+   BASE TYPOGRAPHY
+   ============================================================ */
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  font-family: 'Outfit', sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: var(--font-sans);
+  background-color: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.65;
+  letter-spacing: 0.01em;
 }
 
+h1, h2, h3, h4, h5, h6,
+.serif-text {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+p {
+  color: var(--text-secondary);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+
+/* -- Luxury label (ALL CAPS small tracking) -- */
+.luxury-label,
 .luxury-text {
-  letter-spacing: 1px;
+  font-family: var(--font-sans) !important;
+  font-size: 0.68rem !important;
+  font-weight: 600;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
+  color: var(--text-muted);
 }
 
+/* ============================================================
+   GLOBAL COMPONENT STYLES
+   ============================================================ */
+
+/* -- Navbar -- */
+.app-navbar {
+  background: rgba(250, 247, 242, 0.9) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border) !important;
+  transition: background var(--transition-base);
+}
+
+html.dark-mode .app-navbar {
+  background: rgba(30, 30, 30, 0.92) !important;
+  border-bottom-color: var(--border) !important;
+}
+
+/* -- Nav Links -- */
+.luxury-nav-link {
+  font-family: var(--font-sans) !important;
+  font-size: 0.82rem !important;
+  letter-spacing: 0.09em;
+  text-transform: uppercase !important;
+  color: var(--text-primary) !important;
+  font-weight: 500 !important;
+  opacity: 0.85;
+  transition: opacity var(--transition-fast);
+}
+
+.luxury-nav-link:hover {
+  opacity: 1;
+}
+
+/* -- Premium Card -- */
 .premium-card {
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  border-radius: 16px !important;
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-card) !important;
+  transition: transform var(--transition-slow), box-shadow var(--transition-slow), border-color var(--transition-base) !important;
+  overflow: hidden;
 }
 
 .premium-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 14px 28px rgba(0,0,0,0.1), 0 10px 10px rgba(0,0,0,0.08) !important;
+  transform: translateY(-5px) !important;
+  box-shadow: var(--shadow-card-hover) !important;
+  border-color: var(--primary) !important;
 }
 
-.v-btn {
-  text-transform: none !important;
-  letter-spacing: 0.5px !important;
+/* -- Primary Button -- */
+.btn-primary,
+.btn-terra {
+  background-color: var(--primary-hover) !important;
+  color: #fff !important;
+  border-radius: var(--radius-md) !important;
+  font-family: var(--font-sans) !important;
   font-weight: 500 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: none !important;
+  padding: 0 28px !important;
+  transition: background-color var(--transition-base), transform var(--transition-fast), box-shadow var(--transition-base) !important;
+  box-shadow: 0 4px 16px rgba(217, 122, 108, 0.25) !important;
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.5s ease;
+.btn-primary:hover,
+.btn-terra:hover {
+  background-color: #C86856 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 20px rgba(217, 122, 108, 0.35) !important;
 }
 
-.fade-enter-from, .fade-leave-to {
+.btn-primary:active,
+.btn-terra:active {
+  transform: translateY(0) !important;
+}
+
+/* -- Outlined Button -- */
+.btn-outline {
+  border: 1.5px solid var(--primary-hover) !important;
+  color: var(--primary-hover) !important;
+  background: transparent !important;
+  border-radius: var(--radius-md) !important;
+  font-family: var(--font-sans) !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  transition: all var(--transition-base) !important;
+}
+
+.btn-outline:hover {
+  background: var(--primary-muted) !important;
+}
+
+/* -- Trending Badge -- */
+.trending-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--primary-hover);
+  letter-spacing: 0.04em;
+}
+
+.trending-badge::before {
+  content: '•';
+  font-size: 1.1rem;
+  color: var(--primary);
+  line-height: 0;
+  position: relative;
+  top: 1px;
+}
+
+/* ============================================================
+   SCROLL REVEAL ANIMATIONS
+   ============================================================ */
+.reveal-on-scroll {
   opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.65s ease-out, transform 0.65s ease-out;
 }
 
-/* Glassmorphism */
-.glass-effect {
-  background: rgba(255, 255, 255, 0.7) !important;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+.reveal-on-scroll.active {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.dark-mode .glass-effect {
-  background: rgba(30, 30, 30, 0.7) !important;
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ============================================================
+   CUSTOM SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: var(--radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+/* ============================================================
+   MOBILE — no hover transforms
+   ============================================================ */
+@media (hover: none) {
+  .premium-card:hover {
+    transform: none !important;
+    box-shadow: var(--shadow-card) !important;
+  }
+
+  .btn-primary:hover,
+  .btn-terra:hover {
+    transform: none !important;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE HELPERS
+   ============================================================ */
+@media (max-width: 599px) {
+  :root {
+    --space-9:  56px;
+    --space-10: 72px;
+  }
 }

@@ -4,16 +4,17 @@
     :color="snackbar.color"
     :timeout="snackbar.timeout"
     location="bottom right"
-    flat
+    rounded="lg"
+    elevation="4"
   >
-    {{ snackbar.text }}
+    <span class="snackbar-text">{{ snackbar.text }}</span>
     <template v-slot:actions>
       <v-btn
         variant="text"
-        @click="closeSnackbar"
         icon="mdi-close"
         density="compact"
-      ></v-btn>
+        @click="closeSnackbar"
+      />
     </template>
   </v-snackbar>
 </template>
@@ -29,3 +30,11 @@ const closeSnackbar = () => {
   store.dispatch('snackbar/hide')
 }
 </script>
+
+<style scoped>
+.snackbar-text {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+</style>

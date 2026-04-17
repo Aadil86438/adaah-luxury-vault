@@ -1,70 +1,82 @@
 <template>
-  <v-dialog v-model="show" max-width="900px" scrim="#000">
-    <v-card v-if="product" class="premium-card overflow-hidden" flat>
-      <v-row no-gutters>
-        <v-col cols="12" md="6">
-          <v-img :src="product.image_url" height="100%" cover></v-img>
-        </v-col>
-        <v-col cols="12" md="6" class="pa-8 d-flex flex-column">
-          <div class="d-flex justify-space-between align-start mb-4">
+  <v-dialog v-model="show" max-width="860px" scrim="rgba(30,15,10,0.65)">
+    <div v-if="product" class="modal-root">
+      <!-- Close button (mobile absolute) -->
+      <button class="modal-close d-md-none" @click="show = false" aria-label="Close">
+        <v-icon size="20">mdi-close</v-icon>
+      </button>
+
+      <div class="modal-grid">
+        <!-- Left: Product Image -->
+        <div class="modal-image-col">
+          <v-img
+            :src="product.image_url || 'https://placehold.co/600x600/FAF7F2/D97A6C?text=Adaah'"
+            cover
+            height="100%"
+            class="modal-image"
+            :max-height="$vuetify.display.xs ? '280px' : '100%'"
+          />
+        </div>
+
+        <!-- Right: Product Details -->
+        <div class="modal-detail-col">
+          <!-- Header -->
+          <div class="modal-header">
             <div>
-              <div class="text-caption luxury-text color-primary">{{ product.category }}</div>
-              <h2 class="text-h4 font-weight-bold">{{ product.name }}</h2>
+              <span class="luxury-label modal-category">{{ product.category }}</span>
+              <h2 class="modal-title serif-text">{{ product.name }}</h2>
+              <div class="trending-badge modal-badge">Now Trending</div>
+              <p class="modal-price">₹ {{ parseFloat(product.price).toLocaleString('en-IN') }}</p>
             </div>
-            <v-btn icon="mdi-close" variant="text" @click="show = false"></v-btn>
+            <button class="modal-close-desktop d-none d-md-flex" @click="show = false" aria-label="Close">
+              <v-icon size="20">mdi-close</v-icon>
+            </button>
           </div>
 
-          <div class="text-h5 color-secondary mb-6 font-weight-bold">
-            ₹ {{ parseFloat(product.price).toLocaleString() }}
-          </div>
+          <p class="modal-desc">{{ product.description }}</p>
 
-          <p class="text-body-1 opacity-70 mb-8 flex-grow-1">
-            {{ product.description }}
-          </p>
+          <div class="modal-divider" />
 
-          <v-divider class="mb-8"></v-divider>
+          <p class="modal-order-label">📦 Quick Order via WhatsApp</p>
 
-          <h4 class="luxury-text mb-4">Order via WhatsApp</h4>
-          <v-form @submit.prevent="handleOrder" v-model="formValid">
-            <v-row>
-              <v-col cols="12" sm="6" class="py-1">
-                <v-text-field
-                  v-model="customerName"
-                  label="Your Name"
-                  variant="outlined"
-                  density="comfortable"
-                  :rules="[v => !!v || 'Name is required']"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" class="py-1">
-                <v-text-field
-                  v-model="customerPhone"
-                  label="Phone Number"
-                  variant="outlined"
-                  density="comfortable"
-                  :rules="[v => !!v || 'Phone is required']"
-                  required
-                ></v-text-field>
-              </v-col>
-            </v-row>
+          <v-form @submit.prevent="handleOrder" v-model="formValid" class="modal-form">
+            <div class="form-row">
+              <v-text-field
+                v-model="customerName"
+                label="Your Name"
+                variant="outlined"
+                density="comfortable"
+                :rules="[v => !!v || 'Required']"
+                hide-details="auto"
+                class="form-field"
+              />
+              <v-text-field
+                v-model="customerPhone"
+                label="Phone Number"
+                variant="outlined"
+                density="comfortable"
+                :rules="[v => !!v || 'Required']"
+                hide-details="auto"
+                class="form-field"
+              />
+            </div>
 
-            <v-btn
-              color="primary"
-              variant="flat"
-              block
-              size="large"
-              class="rounded-pill mt-4 luxury-text"
-              :disabled="!formValid || loading"
-              :loading="loading"
+            <button
               type="submit"
+              class="btn-terra modal-order-btn"
+              :class="{ disabled: !formValid || loading }"
+              :disabled="!formValid || loading"
             >
-              Order Now 💎
-            </v-btn>
+              <span v-if="loading" class="btn-loading">
+                <v-progress-circular size="16" width="2" indeterminate color="white" />
+                Processing…
+              </span>
+              <span v-else>Shop Now 🛍</span>
+            </button>
           </v-form>
-        </v-col>
-      </v-row>
-    </v-card>
+        </div>
+      </div>
+    </div>
   </v-dialog>
 </template>
 
@@ -83,12 +95,13 @@ const loading = ref(false)
 
 const open = (pProduct) => {
   product.value = pProduct
+  customerName.value = ''
+  customerPhone.value = ''
   show.value = true
 }
 
 const handleOrder = () => {
   if (!formValid.value) return
-
   loading.value = true
 
   const lOrderData = {
@@ -99,11 +112,11 @@ const handleOrder = () => {
   }
 
   SupabaseService.createOrder(lOrderData).then(() => {
-    store.dispatch('snackbar/show', { text: 'Order summary saved. Redirecting to WhatsApp...', color: 'success' })
-    
+    store.dispatch('snackbar/show', { text: 'Order saved! Redirecting to WhatsApp...', color: 'success' })
+
     const lMessage = `✨ ADAAH JEWELRY ORDER ✨
 🛍 Product: ${product.value.name}
-💰 Price: ₹${parseFloat(product.value.price).toLocaleString()}
+💰 Price: ₹${parseFloat(product.value.price).toLocaleString('en-IN')}
 
 👤 Customer:
 Name: ${customerName.value}
@@ -113,15 +126,10 @@ Phone: ${customerPhone.value}
 
 Thank you for choosing Adaah 💎`
 
-    const lEncodedMessage = encodeURIComponent(lMessage)
-    const lWhatsappUrl = `https://wa.me/918643839796?text=${lEncodedMessage}`
-
     setTimeout(() => {
-      window.open(lWhatsappUrl, '_blank')
+      window.open(`https://wa.me/918643839796?text=${encodeURIComponent(lMessage)}`, '_blank')
       show.value = false
       loading.value = false
-      customerName.value = ''
-      customerPhone.value = ''
     }, 1500)
   }).catch((pError) => {
     store.dispatch('snackbar/show', { text: pError.message || 'Failed to save order', color: 'error' })
@@ -131,3 +139,205 @@ Thank you for choosing Adaah 💎`
 
 defineExpose({ open })
 </script>
+
+<style scoped>
+/* ── Modal Root ── */
+.modal-root {
+  background: var(--card);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── Grid ── */
+.modal-grid {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  min-height: 480px;
+}
+
+/* ── Image Column ── */
+.modal-image-col {
+  overflow: hidden;
+  background: var(--bg-offset);
+}
+
+.modal-image {
+  height: 100%;
+}
+
+/* ── Detail Column ── */
+.modal-detail-col {
+  padding: 40px 44px;
+  background: var(--card);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+/* ── Header ── */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.modal-category {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.modal-title {
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  color: var(--text-primary);
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+
+.modal-badge {
+  margin-bottom: 8px;
+}
+
+.modal-price {
+  font-family: var(--font-sans);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--primary-hover);
+  margin-top: 6px;
+}
+
+/* ── Close Buttons ── */
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.modal-close:hover {
+  background: var(--bg-offset);
+}
+
+.modal-close-desktop {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg-offset);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background var(--transition-fast);
+}
+
+.modal-close-desktop:hover {
+  background: var(--border);
+  color: var(--text-primary);
+}
+
+/* ── Description ── */
+.modal-desc {
+  font-family: var(--font-sans);
+  font-size: 0.93rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+
+/* ── Divider ── */
+.modal-divider {
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 24px;
+}
+
+/* ── Order Form ── */
+.modal-order-label {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.modal-order-btn {
+  width: 100%;
+  text-align: center;
+  padding: 14px 28px !important;
+  border-radius: var(--radius-md) !important;
+  font-size: 0.95rem;
+}
+
+.modal-order-btn.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .modal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-image-col {
+    height: 260px;
+  }
+
+  .modal-image {
+    height: 260px;
+    max-height: 260px;
+  }
+
+  .modal-detail-col {
+    padding: 28px 24px 36px;
+    max-height: none;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-detail-col {
+    padding: 24px 20px 32px;
+  }
+}
+</style>

@@ -1,88 +1,98 @@
 <template>
   <v-dialog v-model="show" max-width="600px" persistent>
-    <v-card class="premium-card">
-      <v-card-title class="luxury-text pt-6 px-6">
-        {{ editingProduct ? 'Edit Product' : 'Add New Product' }}
-      </v-card-title>
-      
-      <v-card-text class="pa-6">
+    <div class="form-card">
+      <div class="form-header">
+        <h2 class="form-title serif-text">
+          {{ editingProduct ? 'Edit Product' : 'New Product' }}
+        </h2>
+        <button class="form-close-btn" @click="show = false" :disabled="loading">
+          <v-icon size="18">mdi-close</v-icon>
+        </button>
+      </div>
+
+      <div class="form-body">
         <v-form ref="form" v-model="formValid">
-          <v-text-field
-            v-model="product.name"
-            label="Product Name"
-            variant="outlined"
-            density="comfortable"
-            :rules="[v => !!v || 'Name is required']"
-            required
-          ></v-text-field>
+          <div class="form-field-group">
+            <v-text-field
+              v-model="product.name"
+              label="Product Name"
+              variant="outlined"
+              density="comfortable"
+              :rules="[v => !!v || 'Name is required']"
+              required
+            />
+          </div>
 
-          <v-row>
-            <v-col cols="6">
-              <v-text-field
-                v-model.number="product.price"
-                label="Price (₹)"
-                type="number"
-                variant="outlined"
-                density="comfortable"
-                :rules="[v => !!v || 'Price is required']"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="6">
-              <v-text-field
-                v-model="product.category"
-                label="Category"
-                variant="outlined"
-                density="comfortable"
-                :rules="[v => !!v || 'Category is required']"
-                required
-              ></v-text-field>
-            </v-col>
-          </v-row>
+          <div class="form-row">
+            <v-text-field
+              v-model.number="product.price"
+              label="Price (₹)"
+              type="number"
+              variant="outlined"
+              density="comfortable"
+              :rules="[v => !!v || 'Price is required']"
+              required
+            />
+            <v-text-field
+              v-model="product.category"
+              label="Category"
+              variant="outlined"
+              density="comfortable"
+              :rules="[v => !!v || 'Category is required']"
+              required
+            />
+          </div>
 
-          <v-textarea
-            v-model="product.description"
-            label="Description"
-            variant="outlined"
-            density="comfortable"
-            rows="3"
-            :rules="[v => !!v || 'Description is required']"
-            required
-          ></v-textarea>
+          <div class="form-field-group">
+            <v-textarea
+              v-model="product.description"
+              label="Description"
+              variant="outlined"
+              density="comfortable"
+              rows="3"
+              :rules="[v => !!v || 'Description is required']"
+              required
+            />
+          </div>
 
-          <v-file-input
-            v-model="imageFile"
-            label="Product Image"
-            prepend-icon="mdi-camera"
-            variant="outlined"
-            density="comfortable"
-            accept="image/*"
-            @change="handleImageChange"
-            :loading="uploading"
-          ></v-file-input>
+          <div class="form-field-group">
+            <v-file-input
+              v-model="imageFile"
+              label="Product Image"
+              prepend-icon="mdi-image-outline"
+              variant="outlined"
+              density="comfortable"
+              accept="image/*"
+              :loading="uploading"
+              @change="handleImageChange"
+            />
+          </div>
 
-          <div v-if="product.image_url" class="mt-4">
-            <p class="text-caption mb-2">Image Preview:</p>
-            <v-img :src="product.image_url" height="150" contain class="border rounded"></v-img>
+          <div v-if="product.image_url" class="image-preview">
+            <p class="preview-label luxury-label">Image Preview</p>
+            <img :src="product.image_url" alt="Product preview" class="preview-img" />
           </div>
         </v-form>
-      </v-card-text>
+      </div>
 
-      <v-card-actions class="pa-6 pt-0">
-        <v-spacer></v-spacer>
-        <v-btn variant="text" @click="show = false" :disabled="loading">Cancel</v-btn>
-        <v-btn
-          color="primary"
-          variant="flat"
-          class="rounded-pill px-8"
-          :loading="loading"
+      <div class="form-footer">
+        <button class="form-btn form-cancel" @click="show = false" :disabled="loading">
+          Cancel
+        </button>
+        <button
+          class="btn-terra form-btn form-submit"
           :disabled="!formValid || loading || uploading"
+          :class="{ disabled: !formValid || loading || uploading }"
           @click="saveProduct"
         >
-          {{ editingProduct ? 'Update' : 'Create' }}
-        </v-btn>
-      </v-card-actions>
-    </v-card>
+          <span v-if="loading" class="btn-loading">
+            <v-progress-circular size="14" width="2" indeterminate color="white" />
+            Saving…
+          </span>
+          <span v-else>{{ editingProduct ? 'Update Product' : 'Create Product' }}</span>
+        </button>
+      </div>
+    </div>
   </v-dialog>
 </template>
 
@@ -136,7 +146,6 @@ const handleImageChange = (pEvent) => {
   uploading.value = true
   SupabaseService.uploadProductImage(lFile).then(({ data, error }) => {
     if (error) throw error
-    
     return SupabaseService.getPublicUrl(data.path)
   }).then(({ data }) => {
     product.image_url = data.publicUrl
@@ -155,7 +164,7 @@ const saveProduct = () => {
   }
 
   loading.value = true
-  const lOperation = editingProduct.value 
+  const lOperation = editingProduct.value
     ? SupabaseService.updateProduct(editingProduct.value.id, product)
     : SupabaseService.createProduct(product)
 
@@ -174,3 +183,125 @@ const saveProduct = () => {
 const emit = defineEmits(['saved'])
 defineExpose({ open })
 </script>
+
+<style scoped>
+.form-card {
+  background: var(--card);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+/* ── Header ── */
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 32px 0;
+}
+
+.form-title {
+  font-size: 1.6rem;
+  color: var(--text-primary);
+}
+
+.form-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-offset);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.form-close-btn:hover {
+  background: var(--border);
+  color: var(--text-primary);
+}
+
+/* ── Body ── */
+.form-body {
+  padding: 24px 32px;
+}
+
+.form-field-group {
+  margin-bottom: 4px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+/* ── Image Preview ── */
+.image-preview {
+  margin-top: 12px;
+}
+
+.preview-label {
+  margin-bottom: 8px;
+}
+
+.preview-img {
+  width: 100%;
+  max-height: 160px;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+
+/* ── Footer ── */
+.form-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 0 32px 28px;
+}
+
+.form-btn {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding: 10px 24px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.form-cancel {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+.form-cancel:hover:not(:disabled) {
+  background: var(--bg-offset);
+  color: var(--text-primary);
+}
+
+.form-submit {
+  border: none;
+  padding: 10px 28px !important;
+  border-radius: var(--radius-md) !important;
+}
+
+.form-submit.disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+</style>
