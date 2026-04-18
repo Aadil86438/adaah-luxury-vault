@@ -68,6 +68,20 @@
                   @input="sanitizePhone"
                 />
               </div>
+
+            <!-- Inline button — visible on desktop only -->
+            <button
+              type="submit"
+              class="btn-terra modal-order-btn modal-order-btn--desktop"
+              :class="{ disabled: !formValid || loading }"
+              :disabled="!formValid || loading"
+            >
+              <span v-if="loading" class="btn-loading">
+                <v-progress-circular size="16" width="2" indeterminate color="white" />
+                Processing…
+              </span>
+              <span v-else>Shop Now 🛍</span>
+            </button>
             </v-form>
           </div>
         </div>
@@ -605,11 +619,13 @@ defineExpose({ open })
   }
 
   .qr-img { width: 170px; height: 170px; }
+  .modal-order-btn--desktop { display: none; }
 }
 
+/* On desktop: hide sticky footer, show inline button */
 @media (min-width: 769px) {
   .modal-sticky-footer { display: none; }
-  .modal-detail-col .modal-order-btn { display: block; }
+  .modal-order-btn--desktop { display: block; }
   .modal-form { margin-bottom: 0; }
 }
 
