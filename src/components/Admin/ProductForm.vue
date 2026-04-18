@@ -1,6 +1,6 @@
 <template>
-  <v-dialog v-model="show" max-width="600px" persistent>
-    <div class="form-card">
+  <v-dialog v-model="show" max-width="600px" persistent :max-height="$vuetify.display.xs ? '94dvh' : undefined">
+    <div class="form-card" :style="$vuetify.display.xs ? 'display:flex;flex-direction:column;max-height:94dvh;max-height:94vh' : ''">
       <div class="form-header">
         <h2 class="form-title serif-text">
           {{ editingProduct ? 'Edit Product' : 'New Product' }}
@@ -10,7 +10,7 @@
         </button>
       </div>
 
-      <div class="form-body">
+      <div class="form-body form-body--scroll">
         <v-form ref="form" v-model="formValid">
           <div class="form-field-group">
             <v-text-field
@@ -25,12 +25,14 @@
 
           <div class="form-row">
             <v-text-field
-              v-model.number="product.price"
+              v-model="product.price"
               label="Price (₹)"
-              type="number"
               variant="outlined"
               density="comfortable"
-              :rules="[v => !!v || 'Price is required']"
+              type="tel"
+              inputmode="numeric"
+              :rules="priceRules"
+              @input="sanitizePrice"
               required
             />
             <v-text-field
@@ -97,7 +99,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { SupabaseService } from '../../services/SupabaseService'
 import { useStore } from 'vuex'
 
@@ -108,6 +110,18 @@ const uploading = ref(false)
 const formValid = ref(false)
 const editingProduct = ref(null)
 const imageFile = ref(null)
+
+// ── Validation Rules ──
+const priceRules = [
+  v => !!v                        || 'Price is required',
+  v => /^\d+$/.test(v)           || 'Only numbers allowed',
+  v => parseInt(v) > 0           || 'Price must be greater than 0',
+  v => parseInt(v) <= 999999     || 'Price seems too high'
+]
+
+const sanitizePrice = () => {
+  product.price = product.price.toString().replace(/\D/g, '')
+}
 
 const product = reactive({
   name: '',
@@ -192,6 +206,17 @@ defineExpose({ open })
   box-shadow: var(--shadow-lg);
 }
 
+/* ── Mobile: make card fill available height with sticky footer ── */
+@media (max-width: 599px) {
+  .form-card {
+    display: flex;
+    flex-direction: column;
+    max-height: 94dvh;
+    max-height: 94vh; /* fallback for older browsers */
+    border-radius: var(--radius-lg);
+  }
+}
+
 /* ── Header ── */
 .form-header {
   display: flex;
@@ -227,6 +252,34 @@ defineExpose({ open })
 /* ── Body ── */
 .form-body {
   padding: 24px 32px;
+}
+
+/* Scrollable body on mobile */
+@media (max-width: 599px) {
+  .form-body--scroll {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 20px 20px 12px;
+  }
+
+  .form-header {
+    padding: 22px 20px 0;
+    flex-shrink: 0;
+  }
+
+  .form-footer {
+    flex-shrink: 0;
+    padding: 14px 20px 20px;
+    border-top: 1px solid var(--border);
+    background: var(--card);
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
 }
 
 .form-field-group {
