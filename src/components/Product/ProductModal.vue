@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="show" max-width="860px" scrim="rgba(30,15,10,0.65)">
+  <v-dialog v-model="show" max-width="860px" scrim="rgba(30,15,10,0.65)" :max-height="$vuetify.display.xs ? '92dvh' : undefined">
     <div v-if="product" class="modal-root">
       <!-- Close button (mobile absolute) -->
       <button class="modal-close d-md-none" @click="show = false" aria-label="Close">
@@ -60,21 +60,25 @@
                 class="form-field"
               />
             </div>
-
-            <button
-              type="submit"
-              class="btn-terra modal-order-btn"
-              :class="{ disabled: !formValid || loading }"
-              :disabled="!formValid || loading"
-            >
-              <span v-if="loading" class="btn-loading">
-                <v-progress-circular size="16" width="2" indeterminate color="white" />
-                Processing…
-              </span>
-              <span v-else>Shop Now 🛍</span>
-            </button>
           </v-form>
         </div>
+      </div>
+
+      <!-- ── Sticky Order Button (always visible on mobile) ── -->
+      <div class="modal-sticky-footer">
+        <button
+          type="button"
+          class="btn-terra modal-order-btn"
+          :class="{ disabled: !formValid || loading }"
+          :disabled="!formValid || loading"
+          @click="handleOrder"
+        >
+          <span v-if="loading" class="btn-loading">
+            <v-progress-circular size="16" width="2" indeterminate color="white" />
+            Processing…
+          </span>
+          <span v-else>Shop Now 🛍</span>
+        </button>
       </div>
     </div>
   </v-dialog>
@@ -309,35 +313,90 @@ defineExpose({ open })
   justify-content: center;
 }
 
+/* ── Sticky Footer Button ── */
+.modal-sticky-footer {
+  padding: 16px 20px;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
 /* ── Mobile ── */
 @media (max-width: 768px) {
+  .modal-root {
+    display: flex;
+    flex-direction: column;
+    max-height: 92dvh;
+    max-height: 92vh; /* fallback */
+  }
+
   .modal-grid {
     grid-template-columns: 1fr;
+    flex: 1;
+    overflow: hidden;
+    min-height: 0;
   }
 
   .modal-image-col {
-    height: 260px;
+    height: 230px;
+    flex-shrink: 0;
   }
 
   .modal-image {
-    height: 260px;
-    max-height: 260px;
+    height: 230px;
+    max-height: 230px;
   }
 
   .modal-detail-col {
-    padding: 28px 24px 36px;
+    padding: 22px 20px 20px;
     max-height: none;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* Hide the non-sticky button area padding on mobile */
+  .modal-order-btn:not(.modal-sticky-footer .modal-order-btn) {
+    display: none;
   }
 
   .form-row {
     grid-template-columns: 1fr;
     gap: 10px;
+    margin-bottom: 8px;
+  }
+}
+
+/* On desktop, hide the sticky footer — button is inline */
+@media (min-width: 769px) {
+  .modal-sticky-footer {
+    display: none;
+  }
+
+  /* Restore inline button */
+  .modal-detail-col .modal-order-btn {
+    display: block;
+  }
+
+  /* Re-add bottom form margin on desktop */
+  .modal-form {
+    margin-bottom: 0;
   }
 }
 
 @media (max-width: 480px) {
+  .modal-image-col {
+    height: 200px;
+  }
+
+  .modal-image {
+    height: 200px;
+    max-height: 200px;
+  }
+
   .modal-detail-col {
-    padding: 24px 20px 32px;
+    padding: 18px 16px 16px;
   }
 }
 </style>
