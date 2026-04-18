@@ -46,18 +46,26 @@
                 label="Your Name"
                 variant="outlined"
                 density="comfortable"
-                :rules="[v => !!v || 'Required']"
+                :rules="nameRules"
                 hide-details="auto"
                 class="form-field"
+                maxlength="50"
+                autocomplete="name"
               />
               <v-text-field
                 v-model="customerPhone"
-                label="Phone Number"
+                label="WhatsApp Number"
                 variant="outlined"
                 density="comfortable"
-                :rules="[v => !!v || 'Required']"
+                :rules="phoneRules"
                 hide-details="auto"
                 class="form-field"
+                type="tel"
+                inputmode="numeric"
+                maxlength="10"
+                prefix="+91"
+                autocomplete="tel"
+                @input="sanitizePhone"
               />
             </div>
           </v-form>
@@ -96,6 +104,24 @@ const customerName = ref('')
 const customerPhone = ref('')
 const formValid = ref(false)
 const loading = ref(false)
+
+// ── Validation Rules ──
+const nameRules = [
+  v => !!v?.trim()            || 'Name is required',
+  v => v?.trim().length >= 2  || 'Name must be at least 2 characters',
+  v => /^[a-zA-Z\s'-]+$/.test(v?.trim()) || 'Name must contain letters only'
+]
+
+const phoneRules = [
+  v => !!v                    || 'Phone number is required',
+  v => /^\d+$/.test(v)       || 'Only digits are allowed',
+  v => v?.length === 10       || 'Must be exactly 10 digits'
+]
+
+// Strip any non-digit characters as user types
+const sanitizePhone = () => {
+  customerPhone.value = customerPhone.value.replace(/\D/g, '').slice(0, 10)
+}
 
 const open = (pProduct) => {
   product.value = pProduct
