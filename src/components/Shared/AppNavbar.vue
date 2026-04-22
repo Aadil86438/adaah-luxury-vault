@@ -11,7 +11,7 @@
 
       <!-- Brand -->
       <div class="navbar-brand serif-text" @click="$router.push('/')">
-        Adaah
+        Adah
       </div>
 
       <v-spacer />
@@ -58,7 +58,7 @@
   <!-- Mobile Navigation Drawer -->
   <v-navigation-drawer v-model="drawer" temporary width="272" class="mobile-drawer">
     <div class="drawer-content">
-      <div class="drawer-brand serif-text">Adaah</div>
+      <div class="drawer-brand serif-text">Adah</div>
       <v-divider class="drawer-divider" />
       <nav class="drawer-nav">
         <router-link to="/" class="drawer-link" @click="drawer = false">

@@ -1,17 +1,18 @@
 <template>
   <div class="home-page">
-    <!-- ── Cinematic Hero Section ── -->
+    <!-- ── Hero Section ── -->
     <section class="hero-section" aria-label="Hero">
-      <div class="hero-overlay" />
       <div class="hero-content">
         <div class="hero-tag reveal-on-scroll">✦ New Collection 2026</div>
-        <h1 class="hero-title reveal-on-scroll">Adored by You,<br />Handcrafted by Us.</h1>
-        <p class="hero-subtitle reveal-on-scroll">
-          Fine jewelry that tells a story of passion, heritage, and timeless beauty.
-        </p>
+        <h1 class="hero-title reveal-on-scroll">Adored by You,<br />Crafted to Shine,<br />Designed to Stay.</h1>
         <button class="btn-terra hero-cta reveal-on-scroll" @click="scrollToProducts">
-          Discover Collection
+          Shop Now
         </button>
+      </div>
+
+      <!-- Right: Adah logo image -->
+      <div class="hero-logo-col">
+        <img src="/src/assets/adah-logo.jpeg" alt="Adah — Everyday Elegance" class="hero-logo-img reveal-on-scroll" />
       </div>
     </section>
 
@@ -103,61 +104,42 @@ onMounted(() => {
   position: relative;
   min-height: 88vh;
   min-height: 88dvh;
-  background-image: url('/src/assets/luxury-hero.png');
-  background-size: cover;
-  background-position: center top;
+  background-color: #F5EFE6;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  gap: 0;
 }
 
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(20, 10, 5, 0.70) 0%,
-    rgba(20, 10, 5, 0.38) 55%,
-    rgba(20, 10, 5, 0.10) 100%
-  );
-}
-
+/* ── Left: Text Content ── */
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 32px;
-  width: 100%;
+  flex: 1;
+  padding: 0 48px 0 max(48px, calc((100vw - 1200px) / 2 + 48px));
+  max-width: 580px;
 }
 
 .hero-tag {
   font-family: var(--font-sans);
-  font-size: 0.8rem;
-  letter-spacing: 0.18em;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--primary-hover);
   margin-bottom: 22px;
-  font-weight: 500;
+  font-weight: 600;
+  display: block;
 }
 
 .hero-title {
   font-family: var(--font-serif);
-  font-size: clamp(2.6rem, 7vw, 5.5rem);
-  line-height: 1.06;
+  font-size: clamp(2.4rem, 4.5vw, 4.8rem);
+  line-height: 1.08;
   font-weight: 500;
-  color: #fff;
-  margin-bottom: 24px;
-  letter-spacing: -0.02em;
-}
-
-.hero-subtitle {
-  font-family: var(--font-sans);
-  font-size: clamp(0.95rem, 2.2vw, 1.15rem);
-  opacity: 0.88;
-  max-width: 460px;
-  line-height: 1.75;
+  color: #3D3228;
   margin-bottom: 44px;
-  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: -0.02em;
 }
 
 .hero-cta {
@@ -165,6 +147,25 @@ onMounted(() => {
   padding: 14px 36px !important;
   border-radius: var(--radius-md) !important;
   min-width: 200px;
+}
+
+/* ── Right: Logo Image ── */
+.hero-logo-col {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 48px 40px 0;
+  max-width: 560px;
+}
+
+.hero-logo-img {
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 20px 60px rgba(74, 63, 53, 0.12);
+  object-fit: contain;
 }
 
 /* ── Products Section ── */
@@ -217,15 +218,45 @@ onMounted(() => {
   margin-bottom: 20px;
 }
 
-/* ── Responsive ── */
-@media (max-width: 599px) {
+/* ── Responsive: Tablet ── */
+@media (max-width: 900px) {
   .hero-section {
-    min-height: 75vh;
-    background-position: center;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    min-height: auto;
+    padding: 80px 24px 60px;
+    gap: 40px;
   }
 
   .hero-content {
-    padding: 0 20px;
+    padding: 0;
+    max-width: 100%;
+    flex: none;
+  }
+
+  .hero-logo-col {
+    padding: 0;
+    max-width: 340px;
+    flex: none;
+    width: 100%;
+  }
+
+  .hero-logo-img {
+    max-width: 300px;
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 599px) {
+  .hero-section {
+    padding: 64px 20px 48px;
+    gap: 32px;
+  }
+
+  .hero-logo-img {
+    max-width: 240px;
+    box-shadow: 0 12px 36px rgba(74, 63, 53, 0.10);
   }
 
   .products-inner {

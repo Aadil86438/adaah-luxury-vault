@@ -5,7 +5,7 @@
 
         <!-- Brand Column -->
         <div class="footer-brand-col">
-          <div class="footer-logo serif-text">Adaah</div>
+          <div class="footer-logo serif-text">Adah</div>
           <p class="footer-tagline">
             Fine jewelry, handcrafted for the modern soul. Every piece tells a story of passion and heritage.
           </p>
@@ -68,7 +68,7 @@
       <div class="footer-divider" />
 
       <div class="footer-copy">
-        © {{ new Date().getFullYear() }} Adaah Jewelry. Crafted with love. All rights reserved.
+        © {{ new Date().getFullYear() }} Adah Jewelry. Crafted with love. All rights reserved.
       </div>
     </div>
   </footer>

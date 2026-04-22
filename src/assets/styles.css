@@ -204,9 +204,9 @@ html.dark-mode .app-navbar {
 
 .btn-primary:hover,
 .btn-terra:hover {
-  background-color: #C86856 !important;
+  background-color: rgba(217, 122, 108, 0.82) !important;
   transform: translateY(-1px) !important;
-  box-shadow: 0 6px 20px rgba(217, 122, 108, 0.35) !important;
+  box-shadow: 0 6px 20px rgba(217, 122, 108, 0.30) !important;
 }
 
 .btn-primary:active,
