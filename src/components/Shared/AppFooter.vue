@@ -10,7 +10,7 @@
             Fine jewelry, handcrafted for the modern soul. Every piece tells a story of passion and heritage.
           </p>
           <div class="footer-social">
-            <a
+            <!-- <a
               href="https://www.youtube.com/@tasneem4646-l2g"
               target="_blank"
               rel="noopener noreferrer"
@@ -18,7 +18,7 @@
               aria-label="YouTube"
             >
               <v-icon size="17">mdi-youtube</v-icon>
-            </a>
+            </a> -->
             <a
               href="https://instagram.com/"
               target="_blank"

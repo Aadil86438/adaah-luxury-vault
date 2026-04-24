@@ -2,17 +2,17 @@
   <div class="home-page">
     <!-- ── Hero Section ── -->
     <section class="hero-section" aria-label="Hero">
+      <!-- Full-width background: the adah brand image -->
+      <img src="/src/assets/adah-logo.jpeg" alt="" class="hero-bg-img" aria-hidden="true" />
+      <div class="hero-overlay"></div>
+
+      <!-- Centered text on top -->
       <div class="hero-content">
         <div class="hero-tag reveal-on-scroll">✦ New Collection 2026</div>
-        <h1 class="hero-title reveal-on-scroll">Adored by You,<br />Crafted to Shine,<br />Designed to Stay.</h1>
+        <h1 class="hero-title reveal-on-scroll">Crafted to Shine,<br />Designed to Stay.</h1>
         <button class="btn-terra hero-cta reveal-on-scroll" @click="scrollToProducts">
           Shop Now
         </button>
-      </div>
-
-      <!-- Right: Adah logo image -->
-      <div class="hero-logo-col">
-        <img src="/src/assets/adah-logo.jpeg" alt="Adah — Everyday Elegance" class="hero-logo-img reveal-on-scroll" />
       </div>
     </section>
 
@@ -102,40 +102,62 @@ onMounted(() => {
 /* ── Hero ── */
 .hero-section {
   position: relative;
-  min-height: 88vh;
-  min-height: 88dvh;
-  background-color: #F5EFE6;
+  min-height: 92vh;
+  min-height: 92dvh;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-start;
+  justify-content: center;
   overflow: hidden;
-  gap: 0;
+  text-align: center;
+  padding-top: 100px;
 }
 
-/* ── Left: Text Content ── */
+/* Full-width background image */
+.hero-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  z-index: 0;
+}
+
+/* Light warm overlay so text pops without killing the image */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(245, 239, 230, 0.55);
+  z-index: 1;
+}
+
+/* Text block centered over the bg */
 .hero-content {
   position: relative;
   z-index: 2;
-  flex: 1;
-  padding: 0 48px 0 max(48px, calc((100vw - 1200px) / 2 + 48px));
-  max-width: 580px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 24px;
+  max-width: 720px;
 }
 
 .hero-tag {
   font-family: var(--font-sans);
   font-size: 0.78rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--primary-hover);
-  margin-bottom: 22px;
+  margin-bottom: 24px;
   font-weight: 600;
   display: block;
 }
 
 .hero-title {
   font-family: var(--font-serif);
-  font-size: clamp(2.4rem, 4.5vw, 4.8rem);
-  line-height: 1.08;
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  line-height: 1.1;
   font-weight: 500;
   color: #3D3228;
   margin-bottom: 44px;
@@ -144,28 +166,9 @@ onMounted(() => {
 
 .hero-cta {
   font-size: 0.95rem;
-  padding: 14px 36px !important;
+  padding: 14px 44px !important;
   border-radius: var(--radius-md) !important;
   min-width: 200px;
-}
-
-/* ── Right: Logo Image ── */
-.hero-logo-col {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 48px 40px 0;
-  max-width: 560px;
-}
-
-.hero-logo-img {
-  width: 100%;
-  max-width: 480px;
-  height: auto;
-  border-radius: var(--radius-xl);
-  box-shadow: 0 20px 60px rgba(74, 63, 53, 0.12);
-  object-fit: contain;
 }
 
 /* ── Products Section ── */
@@ -218,45 +221,16 @@ onMounted(() => {
   margin-bottom: 20px;
 }
 
-/* ── Responsive: Tablet ── */
-@media (max-width: 900px) {
-  .hero-section {
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    min-height: auto;
-    padding: 80px 24px 60px;
-    gap: 40px;
-  }
-
-  .hero-content {
-    padding: 0;
-    max-width: 100%;
-    flex: none;
-  }
-
-  .hero-logo-col {
-    padding: 0;
-    max-width: 340px;
-    flex: none;
-    width: 100%;
-  }
-
-  .hero-logo-img {
-    max-width: 300px;
-  }
-}
-
 /* ── Responsive ── */
 @media (max-width: 599px) {
   .hero-section {
-    padding: 64px 20px 48px;
-    gap: 32px;
+    min-height: 80vh;
+    min-height: 80dvh;
   }
 
-  .hero-logo-img {
-    max-width: 240px;
-    box-shadow: 0 12px 36px rgba(74, 63, 53, 0.10);
+  .hero-title {
+    font-size: clamp(2.4rem, 9vw, 3.2rem);
+    margin-bottom: 32px;
   }
 
   .products-inner {

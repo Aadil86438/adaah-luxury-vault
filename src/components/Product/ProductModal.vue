@@ -2,11 +2,6 @@
   <v-dialog v-model="show" max-width="860px" scrim="rgba(30,15,10,0.65)" :max-height="$vuetify.display.xs ? '92dvh' : undefined">
     <div v-if="product" class="modal-root">
 
-      <!-- Close button (mobile) -->
-      <button class="modal-close d-md-none" @click="show = false" aria-label="Close">
-        <v-icon size="20">mdi-close</v-icon>
-      </button>
-
       <div class="modal-grid">
         <!-- Left: Product Image -->
         <div class="modal-image-col">
@@ -28,7 +23,7 @@
               <div class="trending-badge modal-badge">Now Trending</div>
               <p class="modal-price">₹ {{ parseFloat(product.price).toLocaleString('en-IN') }}</p>
             </div>
-            <button class="modal-close-desktop d-none d-md-flex" @click="show = false" aria-label="Close">
+            <button class="modal-close-desktop" @click="show = false" aria-label="Close">
               <v-icon size="20">mdi-close</v-icon>
             </button>
           </div>
@@ -242,30 +237,14 @@ defineExpose({ open })
   margin-top: 6px;
 }
 
-/* ── Close Buttons ── */
-.modal-close {
-  position: absolute;
-  top: 12px; right: 12px;
-  z-index: 10;
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: var(--card);
-  color: var(--text-primary);
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background var(--transition-fast);
-}
-.modal-close:hover { background: var(--bg-offset); }
-
+/* ── Close Button ── */
 .modal-close-desktop {
   width: 36px; height: 36px;
   border-radius: 50%;
   background: var(--bg-offset);
   color: var(--text-secondary);
   border: 1px solid var(--border);
+  display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
