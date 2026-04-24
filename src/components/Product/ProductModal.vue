@@ -323,29 +323,32 @@ defineExpose({ open })
     flex-direction: column;
     max-height: 92dvh;
     max-height: 92vh;
+    overflow: hidden;
   }
 
+  /* Switch grid to flex-column so image and detail share height properly */
   .modal-grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     flex: 1;
-    overflow: hidden;
     min-height: 0;
+    overflow: hidden;
   }
 
   .modal-image-col {
-    height: 230px;
-    flex-shrink: 0;
+    height: 220px;
+    flex-shrink: 0;   /* image never shrinks */
   }
 
-  .modal-image { height: 230px; max-height: 230px; }
+  .modal-image { height: 220px; max-height: 220px; }
 
   .modal-detail-col {
-    padding: 22px 20px 20px;
-    max-height: none;
+    flex: 1;           /* takes all remaining height */
+    min-height: 0;
+    padding: 20px 20px 16px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    flex: 1;
-    min-height: 0;
+    max-height: none;
   }
 
   .modal-order-btn:not(.modal-sticky-footer .modal-order-btn) { display: none; }
@@ -365,8 +368,8 @@ defineExpose({ open })
 }
 
 @media (max-width: 480px) {
-  .modal-image-col { height: 200px; }
-  .modal-image { height: 200px; max-height: 200px; }
-  .modal-detail-col { padding: 18px 16px 16px; }
+  .modal-image-col { height: 190px; }
+  .modal-image { height: 190px; max-height: 190px; }
+  .modal-detail-col { padding: 16px 16px 12px; }
 }
 </style>

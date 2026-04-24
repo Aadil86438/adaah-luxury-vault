@@ -2,14 +2,18 @@
   <div class="home-page">
     <!-- ── Hero Section ── -->
     <section class="hero-section" aria-label="Hero">
-      <!-- Full-width background: the adah brand image -->
-      <img src="/src/assets/adah-logo.jpeg" alt="" class="hero-bg-img" aria-hidden="true" />
+      <!-- Full-cover background image -->
+      <img src="/src/assets/adah-logo.jpeg" alt="" class="hero-bg" aria-hidden="true" />
       <div class="hero-overlay"></div>
 
-      <!-- Centered text on top -->
+      <!-- Tag + Headline at top-centre -->
       <div class="hero-content">
         <div class="hero-tag reveal-on-scroll">✦ New Collection 2026</div>
         <h1 class="hero-title reveal-on-scroll">Crafted to Shine,<br />Designed to Stay.</h1>
+      </div>
+
+      <!-- Shop Now pinned to the bottom of the hero -->
+      <div class="hero-bottom">
         <button class="btn-terra hero-cta reveal-on-scroll" @click="scrollToProducts">
           Shop Now
         </button>
@@ -19,27 +23,23 @@
     <!-- ── Products Section ── -->
     <section id="products-section" class="products-section">
       <div class="products-inner">
-        <!-- Section Header -->
         <div class="section-header reveal-on-scroll">
           <span class="section-tag">♡ Our Collection</span>
           <h2 class="section-title serif-text">Best Sellers</h2>
         </div>
 
-        <!-- Category Filter -->
         <CategoryFilter
           :categories="categories"
           class="mb-filter reveal-on-scroll"
           @filter="handleFilter"
         />
 
-        <!-- Product Grid -->
         <ProductGrid
           :products="filteredProducts"
           :loading="loading"
           @view="openModal"
         />
 
-        <!-- Empty State -->
         <div v-if="!loading && filteredProducts.length === 0" class="empty-state">
           <p class="serif-text empty-title">No pieces found.</p>
           <button class="btn-outline" @click="activeCategory = 'All'">View All</button>
@@ -47,7 +47,6 @@
       </div>
     </section>
 
-    <!-- ── Product Modal ── -->
     <ProductModal ref="productModal" />
   </div>
 </template>
@@ -67,7 +66,6 @@ const productModal = ref(null)
 const categories = computed(() =>
   ['All', ...new Set(products.value.map(p => p.category).filter(Boolean))]
 )
-
 const filteredProducts = computed(() =>
   activeCategory.value === 'All'
     ? products.value
@@ -82,8 +80,8 @@ const fetchProducts = () => {
     .finally(() => { loading.value = false })
 }
 
-const handleFilter = (pCategory) => { activeCategory.value = pCategory }
-const openModal = (pProduct) => { productModal.value.open(pProduct) }
+const handleFilter = (c) => { activeCategory.value = c }
+const openModal = (p) => { productModal.value.open(p) }
 const scrollToProducts = () => {
   document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' })
 }
@@ -102,66 +100,82 @@ onMounted(() => {
 /* ── Hero ── */
 .hero-section {
   position: relative;
-  min-height: 92vh;
-  min-height: 92dvh;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
-  text-align: center;
-  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 }
 
-/* Full-width background image */
-.hero-bg-img {
+/* Full-bleed background */
+.hero-bg {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
-  display: block;
+  object-position: center center;
   z-index: 0;
+  display: block;
 }
 
-/* Light warm overlay so text pops without killing the image */
+/* Overlay: strong at top so text reads, fades in the middle so logo shows */
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(245, 239, 230, 0.55);
   z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgba(245, 239, 230, 0.82) 0%,
+    rgba(245, 239, 230, 0.40) 28%,
+    rgba(245, 239, 230, 0.12) 55%,
+    rgba(245, 239, 230, 0.75) 100%
+  );
+  pointer-events: none;
 }
 
-/* Text block centered over the bg */
+/* Tag + Headline at the top */
 .hero-content {
   position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 24px;
-  max-width: 720px;
+  text-align: center;
+  padding: 90px 24px 0;
+  max-width: 640px;
+  width: 100%;
 }
 
 .hero-tag {
   font-family: var(--font-sans);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--primary-hover);
-  margin-bottom: 24px;
+  margin-bottom: 18px;
   font-weight: 600;
-  display: block;
 }
 
 .hero-title {
   font-family: var(--font-serif);
-  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-size: clamp(2.6rem, 5vw, 4.4rem);
   line-height: 1.1;
   font-weight: 500;
   color: #3D3228;
-  margin-bottom: 44px;
   letter-spacing: -0.02em;
+}
+
+/* Shop Now pinned at the bottom */
+.hero-bottom {
+  position: relative;
+  z-index: 2;
+  padding: 0 24px 52px;
+  display: flex;
+  justify-content: center;
 }
 
 .hero-cta {
@@ -204,11 +218,8 @@ onMounted(() => {
   color: var(--text-primary);
 }
 
-.mb-filter {
-  margin-bottom: 40px;
-}
+.mb-filter { margin-bottom: 40px; }
 
-/* ── Empty State ── */
 .empty-state {
   text-align: center;
   padding: 80px 0;
@@ -221,24 +232,21 @@ onMounted(() => {
   margin-bottom: 20px;
 }
 
-/* ── Responsive ── */
+/* ── Mobile ── */
 @media (max-width: 599px) {
-  .hero-section {
-    min-height: 80vh;
-    min-height: 80dvh;
+  .hero-content {
+    padding-top: 72px;
   }
 
   .hero-title {
-    font-size: clamp(2.4rem, 9vw, 3.2rem);
-    margin-bottom: 32px;
+    font-size: clamp(2rem, 8vw, 2.8rem);
   }
 
-  .products-inner {
-    padding: 0 16px;
+  .hero-bottom {
+    padding-bottom: 40px;
   }
 
-  .products-section {
-    padding: 56px 0 72px;
-  }
+  .products-inner { padding: 0 16px; }
+  .products-section { padding: 56px 0 72px; }
 }
 </style>
