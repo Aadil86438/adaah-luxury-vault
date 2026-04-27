@@ -101,8 +101,9 @@ onMounted(() => {
 .hero-section {
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
+  max-width: 100%;           /* prevent horizontal overflow */
+  min-height: 100dvh;        /* modern: respects browser chrome */
+  min-height: 100vh;         /* fallback */
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -145,9 +146,10 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 90px 24px 0;
+  padding: 90px 24px 0;    /* 90px top = above navbar + breathing room */
   max-width: 640px;
-  width: 100%;
+  width: 100%;             /* fill parent width up to max-width */
+  box-sizing: border-box;  /* padding doesn't expand width */
 }
 
 .hero-tag {
@@ -235,7 +237,9 @@ onMounted(() => {
 /* ── Mobile ── */
 @media (max-width: 599px) {
   .hero-content {
-    padding-top: 72px;
+    padding-top: 80px;   /* navbar is 68px — 80px gives enough breathing room */
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
   .hero-title {

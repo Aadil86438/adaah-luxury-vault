@@ -9,6 +9,7 @@
             :src="product.image_url || 'https://placehold.co/600x600/FAF7F2/D97A6C?text=Adah'"
             cover
             height="100%"
+            position="center 30%"
             class="modal-image"
             :max-height="$vuetify.display.xs ? '230px' : '100%'"
           />
@@ -181,6 +182,7 @@ defineExpose({ open })
   border-radius: var(--radius-xl);
   overflow: hidden;
   position: relative;
+  width: 100%;          /* fill the v-dialog width fully */
 }
 
 /* ── Grid ── */
@@ -198,6 +200,8 @@ defineExpose({ open })
 
 .modal-image {
   height: 100%;
+  /* Ensure product subject stays centered inside its cropped frame */
+  object-position: center center;
 }
 
 /* ── Detail Column ── */
@@ -338,9 +342,16 @@ defineExpose({ open })
   .modal-image-col {
     height: 220px;
     flex-shrink: 0;   /* image never shrinks */
+    display: flex;    /* ensures v-img fills the column */
+    align-items: stretch;
   }
 
-  .modal-image { height: 220px; max-height: 220px; }
+  .modal-image {
+    height: 220px;
+    max-height: 220px;
+    width: 100%;       /* fill container width exactly */
+    object-position: center 30%; /* keep jewelry subject visible */
+  }
 
   .modal-detail-col {
     flex: 1;           /* takes all remaining height */
@@ -368,8 +379,17 @@ defineExpose({ open })
 }
 
 @media (max-width: 480px) {
-  .modal-image-col { height: 190px; }
-  .modal-image { height: 190px; max-height: 190px; }
-  .modal-detail-col { padding: 16px 16px 12px; }
+  .modal-image-col {
+    height: 190px;
+  }
+  .modal-image {
+    height: 190px;
+    max-height: 190px;
+    width: 100%;
+    object-position: center 30%;
+  }
+  .modal-detail-col {
+    padding: 16px 20px 12px; /* slightly wider side padding for readability */
+  }
 }
 </style>

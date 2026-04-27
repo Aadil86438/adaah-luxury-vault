@@ -124,6 +124,8 @@ const handleLogout = () => {
   color: var(--text-primary);
   cursor: pointer;
   user-select: none;
+  flex-shrink: 0;           /* never let brand text get squished */
+  white-space: nowrap;      /* prevent wrapping */
   transition: opacity var(--transition-fast);
 }
 

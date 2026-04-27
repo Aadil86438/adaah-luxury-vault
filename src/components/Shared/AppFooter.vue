@@ -20,7 +20,7 @@
               <v-icon size="17">mdi-youtube</v-icon>
             </a> -->
             <a
-              href="https://instagram.com/"
+              href="https://www.instagram.com/label.adah?igsh=MWgwdDA3YTg4dGoweA%3D%3D&utm_source=qr"
               target="_blank"
               rel="noopener noreferrer"
               class="social-btn"
@@ -28,7 +28,7 @@
             >
               <v-icon size="17">mdi-instagram</v-icon>
             </a>
-            <a
+            <!-- <a
               href="https://wa.me/918643839796"
               target="_blank"
               rel="noopener noreferrer"
@@ -36,7 +36,7 @@
               aria-label="WhatsApp"
             >
               <v-icon size="17">mdi-whatsapp</v-icon>
-            </a>
+            </a> -->
           </div>
         </div>
 
@@ -48,7 +48,7 @@
           <h4 class="footer-heading luxury-label">Discover</h4>
           <ul class="footer-links">
             <li><a href="/" class="footer-link">New Arrivals</a></li>
-            <li><a href="/" class="footer-link">Best Sellers</a></li>
+            <!-- <li><a href="/" class="footer-link">Best Sellers</a></li> -->
             <li><a href="/" class="footer-link">Collections</a></li>
           </ul>
         </div>
@@ -58,8 +58,8 @@
           <h4 class="footer-heading luxury-label">Contact</h4>
           <ul class="footer-links">
             <li class="footer-link-static">hello@adaah.com</li>
-            <li class="footer-link-static">+91 86438 39796</li>
-            <li class="footer-link-static">Mon–Sat, 10 AM – 7 PM</li>
+            <!-- <li class="footer-link-static">+91 86438 39796</li> -->
+            <!-- <li class="footer-link-static">Mon–Sat, 10 AM – 7 PM</li> -->
           </ul>
         </div>
 
