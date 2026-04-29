@@ -55,15 +55,13 @@ watch(darkMode, (isDark) => applyThemeClass(isDark))
   opacity: 0;
 }
 
-/* ── Ensure v-main uses design-system bg ── */
+/* ── Ensure v-main respects layout ── */
 .v-main {
-  background: transparent !important;
   min-height: calc(100vh - var(--navbar-height));
 }
 
 /* ── v-application root reset ── */
 .v-application {
   font-family: var(--font-sans, 'DM Sans', sans-serif) !important;
-  background: transparent !important;
 }
 </style>

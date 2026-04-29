@@ -1,26 +1,16 @@
 <template>
   <footer class="footer-root">
-    <div class="footer-inner r-container">
-      <div class="footer-grid">
-
+    <v-container style="max-width: 1280px;" class="px-4 py-8">
+      <v-row>
         <!-- Brand Column -->
-        <div class="footer-brand-col">
+        <v-col cols="12" md="6" class="footer-brand-col">
           <div class="footer-logo serif-text">Adah</div>
           <p class="footer-tagline">
             Jewellery for people who actually live in it.  
-Shower, gym, sleep, repeat — it still shines.  
-Anti-tarnish, skin-safe, and designed for your everyday.
+            Shower, gym, sleep, repeat — it still shines.  
+            Anti-tarnish, skin-safe, and designed for your everyday.
           </p>
           <div class="footer-social">
-            <!-- <a
-              href="https://www.youtube.com/@tasneem4646-l2g"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-btn"
-              aria-label="YouTube"
-            >
-              <v-icon size="17">mdi-youtube</v-icon>
-            </a> -->
             <a
               href="https://www.instagram.com/label.adah?igsh=MWgwdDA3YTg4dGoweA%3D%3D&utm_source=qr"
               target="_blank"
@@ -30,46 +20,33 @@ Anti-tarnish, skin-safe, and designed for your everyday.
             >
               <v-icon size="17">mdi-instagram</v-icon>
             </a>
-            <!-- <a
-              href="https://wa.me/918643839796"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-btn"
-              aria-label="WhatsApp"
-            >
-              <v-icon size="17">mdi-whatsapp</v-icon>
-            </a> -->
           </div>
-        </div>
+        </v-col>
 
         <!-- Discover Column -->
-        <div class="footer-link-col">
+        <v-col cols="6" md="3" class="footer-link-col">
           <h4 class="footer-heading luxury-label">Discover</h4>
           <ul class="footer-links">
             <li><a href="/" class="footer-link">New Arrivals</a></li>
-            <!-- <li><a href="/" class="footer-link">Best Sellers</a></li> -->
             <li><a href="/" class="footer-link">Collections</a></li>
           </ul>
-        </div>
+        </v-col>
 
         <!-- Contact Column -->
-        <div class="footer-link-col">
+        <v-col cols="6" md="3" class="footer-link-col">
           <h4 class="footer-heading luxury-label">Contact</h4>
           <ul class="footer-links">
             <li class="footer-link-static">hello@adaah.com</li>
-            <!-- <li class="footer-link-static">+91 86438 39796</li> -->
-            <!-- <li class="footer-link-static">Mon–Sat, 10 AM – 7 PM</li> -->
           </ul>
-        </div>
-
-      </div>
+        </v-col>
+      </v-row>
 
       <div class="footer-divider" />
 
       <div class="footer-copy">
         © {{ new Date().getFullYear() }} Adah Jewelry. Crafted with love. All rights reserved.
       </div>
-    </div>
+    </v-container>
   </footer>
 </template>
 
@@ -83,19 +60,6 @@ Anti-tarnish, skin-safe, and designed for your everyday.
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   border-top: 1px solid var(--border);
-}
-
-.footer-inner {
-  padding-top: 4.5rem;
-  padding-bottom: 2.5rem;
-}
-
-/* ── Grid ── */
-.footer-grid {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  gap: 2.5rem 4rem;
-  align-items: start;
 }
 
 /* ── Brand ── */
@@ -145,6 +109,7 @@ Anti-tarnish, skin-safe, and designed for your everyday.
 /* ── Link Columns ── */
 .footer-heading {
   margin-bottom: 1.25rem;
+  color: var(--text-primary);
 }
 
 .footer-links {
@@ -178,7 +143,7 @@ Anti-tarnish, skin-safe, and designed for your everyday.
 .footer-divider {
   height: 1px;
   background: var(--border);
-  margin: 3rem 0 1.5rem;
+  margin: 2rem 0 1.5rem;
 }
 
 .footer-copy {
@@ -190,28 +155,7 @@ Anti-tarnish, skin-safe, and designed for your everyday.
 }
 
 /* ── Responsive ── */
-@media (max-width: 1024px) {
-  .footer-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 2.5rem 1.5rem;
-  }
-
-  .footer-brand-col {
-    grid-column: 1 / -1;
-  }
-}
-
 @media (max-width: 639px) {
-  .footer-inner {
-    padding-top: 3.5rem;
-    padding-bottom: 2rem;
-  }
-
-  .footer-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
   .footer-tagline {
     max-width: 100%;
   }

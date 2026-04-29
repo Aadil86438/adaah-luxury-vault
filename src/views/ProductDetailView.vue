@@ -1,23 +1,23 @@
 <template>
-  <div class="product-detail-page">
-    <div class="r-container product-detail-inner">
+  <v-container fluid class="pa-0">
+    <v-container style="max-width: 1280px;" class="px-4 py-8">
       <!-- Loading -->
       <div v-if="loading" class="detail-skeleton">
         <v-skeleton-loader type="article, image, article"></v-skeleton-loader>
       </div>
 
       <!-- Product -->
-      <div v-else-if="product" class="detail-card premium-card">
-        <div class="detail-grid">
-          <div class="detail-image-col">
+      <v-card v-else-if="product" class="detail-card premium-card" flat color="white" rounded="lg">
+        <v-row no-gutters>
+          <v-col cols="12" md="6" class="detail-image-col">
             <v-img
               :src="product.image_url"
               cover
               :aspect-ratio="4/5"
               class="detail-image"
             ></v-img>
-          </div>
-          <div class="detail-info-col">
+          </v-col>
+          <v-col cols="12" md="6" class="detail-info-col">
             <div class="text-caption luxury-text" style="color: var(--primary-hover); margin-bottom: 0.5rem;">{{ product.category }}</div>
             <h1 class="detail-name serif-text">{{ product.name }}</h1>
 
@@ -39,13 +39,13 @@
             >
               Order via WhatsApp 💎
             </v-btn>
-          </div>
-        </div>
-      </div>
+          </v-col>
+        </v-row>
+      </v-card>
 
       <ProductModal ref="productModal" />
-    </div>
-  </div>
+    </v-container>
+  </v-container>
 </template>
 
 <script setup>
@@ -86,17 +86,6 @@ onMounted(() => {
 })
 </script>
 
-<style scoped>
-.product-detail-page {
-  min-height: calc(100vh - var(--navbar-height));
-  background: transparent;
-}
-
-.product-detail-inner {
-  padding-top: var(--space-8);
-  padding-bottom: var(--space-10);
-}
-
 .detail-skeleton {
   max-width: 50rem;
   margin: 0 auto;
@@ -111,19 +100,13 @@ onMounted(() => {
   transform: none !important;
 }
 
-/* ── Grid Layout ── */
-.detail-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
 .detail-image-col {
   overflow: hidden;
   background: var(--bg-offset);
 }
 
 .detail-info-col {
-  padding: 2.5rem;
+  padding: clamp(1.5rem, 5vw, 2.5rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -149,25 +132,3 @@ onMounted(() => {
   color: var(--text-secondary);
   margin-bottom: 2.5rem;
 }
-
-/* ── Responsive ── */
-@media (max-width: 1024px) {
-  .detail-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .detail-image-col {
-    max-height: 50vh;
-  }
-}
-
-@media (max-width: 639px) {
-  .product-detail-inner {
-    padding-top: var(--space-6);
-  }
-
-  .detail-info-col {
-    padding: 1.5rem;
-  }
-}
-</style>

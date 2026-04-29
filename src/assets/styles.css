@@ -123,36 +123,8 @@ body {
   letter-spacing: 0.01em;
   margin: 0;
   overflow-x: hidden;
-
-  /* ── Full-page golden leaves background ── */
-  background-image: url('./golden-leaves-bg.png');
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
 }
 
-@media (min-width: 1025px) {
-  body {
-    background-attachment: fixed;
-  }
-}
-
-/* ── Background overlay for readability ── */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background: rgba(255, 255, 255, 0.65);
-  transition: background var(--transition-base);
-}
-
-html.dark-mode body::before {
-  background: rgba(0, 0, 0, 0.35);
-}
-
-/* Ensure all content sits above the overlay */
 #app {
   position: relative;
   z-index: 1;
@@ -189,26 +161,7 @@ a {
    LAYOUT UTILITIES
    ============================================================ */
 
-/* -- Responsive Container (public pages) -- */
-.r-container {
-  width: 100%;
-  max-width: var(--container-public);
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: var(--space-6);
-  padding-right: var(--space-6);
-}
-
-/* -- Admin Container (wider) -- */
-.r-container--admin {
-  max-width: var(--container-admin);
-}
-
-/* -- Responsive Section -- */
-.r-section {
-  padding-top: var(--space-9);
-  padding-bottom: var(--space-10);
-}
+/* Vuetify layout system used instead of custom containers */
 
 /* Mobile adjustments */
 @media (max-width: 639px) {

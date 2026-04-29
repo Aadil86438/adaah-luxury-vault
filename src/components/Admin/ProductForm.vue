@@ -1,39 +1,43 @@
 <template>
   <v-dialog v-model="show" max-width="600px" persistent>
-    <div class="form-card">
+    <v-card class="form-card" rounded="xl" color="white">
       <div class="form-header">
         <h2 class="form-title serif-text">{{ editingProduct ? 'Edit Product' : 'New Product' }}</h2>
-        <button class="form-close-btn" @click="show = false" :disabled="loading"><v-icon size="18">mdi-close</v-icon></button>
+        <v-btn icon flat class="form-close-btn" @click="show = false" :disabled="loading">
+          <v-icon size="18">mdi-close</v-icon>
+        </v-btn>
       </div>
-      <div class="form-body">
+      <v-card-text class="form-body">
         <v-form ref="form" v-model="formValid">
-          <div class="form-field-group">
-            <v-text-field v-model="product.name" label="Product Name" variant="outlined" density="comfortable" :rules="[v => !!v || 'Name is required']" required />
-          </div>
-          <div class="form-row">
-            <v-text-field v-model="product.price" label="Price (₹)" variant="outlined" density="comfortable" type="tel" inputmode="numeric" :rules="priceRules" @input="sanitizePrice" required />
-            <v-text-field v-model="product.category" label="Category" variant="outlined" density="comfortable" :rules="[v => !!v || 'Category is required']" required />
-          </div>
-          <div class="form-field-group">
-            <v-textarea v-model="product.description" label="Description" variant="outlined" density="comfortable" rows="3" :rules="[v => !!v || 'Description is required']" required />
-          </div>
-          <div class="form-field-group">
-            <v-file-input v-model="imageFile" label="Product Image" prepend-icon="mdi-image-outline" variant="outlined" density="comfortable" accept="image/*" :loading="uploading" @change="handleImageChange" />
-          </div>
+          <v-text-field v-model="product.name" label="Product Name" variant="outlined" density="comfortable" :rules="[v => !!v || 'Name is required']" required class="mb-4" />
+          
+          <v-row dense class="mb-2">
+            <v-col cols="12" sm="6">
+              <v-text-field v-model="product.price" label="Price (₹)" variant="outlined" density="comfortable" type="tel" inputmode="numeric" :rules="priceRules" @input="sanitizePrice" required />
+            </v-col>
+            <v-col cols="12" sm="6">
+              <v-text-field v-model="product.category" label="Category" variant="outlined" density="comfortable" :rules="[v => !!v || 'Category is required']" required />
+            </v-col>
+          </v-row>
+
+          <v-textarea v-model="product.description" label="Description" variant="outlined" density="comfortable" rows="3" :rules="[v => !!v || 'Description is required']" required class="mb-4" />
+          
+          <v-file-input v-model="imageFile" label="Product Image" prepend-icon="mdi-image-outline" variant="outlined" density="comfortable" accept="image/*" :loading="uploading" @change="handleImageChange" class="mb-4" />
+          
           <div v-if="product.image_url" class="image-preview">
             <p class="preview-label luxury-label">Image Preview</p>
             <img :src="product.image_url" alt="Product preview" class="preview-img" />
           </div>
         </v-form>
-      </div>
-      <div class="form-footer">
+      </v-card-text>
+      <v-card-actions class="form-footer">
         <button class="form-btn form-cancel" @click="show = false" :disabled="loading">Cancel</button>
         <button class="btn-terra form-btn form-submit" :disabled="!formValid || loading || uploading" :class="{ disabled: !formValid || loading || uploading }" @click="saveProduct">
           <span v-if="loading" class="btn-loading"><v-progress-circular size="14" width="2" indeterminate color="white" /> Saving…</span>
           <span v-else>{{ editingProduct ? 'Update Product' : 'Create Product' }}</span>
         </button>
-      </div>
-    </div>
+      </v-card-actions>
+    </v-card>
   </v-dialog>
 </template>
 
@@ -100,22 +104,21 @@ const saveProduct = () => {
 }
 
 const emit = defineEmits(['saved'])
+const form = ref(null)
 defineExpose({ open })
 </script>
 
 <style scoped>
-.form-card { background: var(--card); border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); display: flex; flex-direction: column; max-height: 94dvh; max-height: 94vh; }
-.form-header { display: flex; justify-content: space-between; align-items: center; padding: 1.75rem 2rem 0; flex-shrink: 0; }
+.form-card { background: white; border-radius: var(--radius-xl); overflow: hidden; display: flex; flex-direction: column; max-height: 94vh; color: var(--text-primary); }
+.form-header { display: flex; justify-content: space-between; align-items: center; padding: 1.75rem 2rem 0.5rem; flex-shrink: 0; }
 .form-title { font-size: 1.6rem; color: var(--text-primary); }
-.form-close-btn { width: 2rem; height: 2rem; border-radius: 50%; background: var(--bg-offset); border: 1px solid var(--border); color: var(--text-secondary); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background var(--transition-fast); }
-.form-close-btn:hover { background: var(--border); color: var(--text-primary); }
-.form-body { padding: 1.5rem 2rem; flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; }
-.form-field-group { margin-bottom: 0.25rem; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.25rem; }
+.form-close-btn { background: var(--bg-offset) !important; color: var(--text-secondary) !important; border: 1px solid var(--border) !important; }
+.form-close-btn:hover { background: var(--border) !important; color: var(--text-primary) !important; }
+.form-body { padding: 1.5rem 2rem; flex: 1; min-height: 0; overflow-y: auto; }
 .image-preview { margin-top: 0.75rem; }
 .preview-label { margin-bottom: 0.5rem; }
 .preview-img { width: 100%; max-height: 10rem; object-fit: contain; border-radius: var(--radius-md); border: 1px solid var(--border); background: var(--bg); }
-.form-footer { display: flex; justify-content: flex-end; gap: 0.625rem; padding: 0 2rem 1.75rem; flex-shrink: 0; }
+.form-footer { display: flex; justify-content: flex-end; gap: 0.625rem; padding: 1rem 2rem 1.75rem; flex-shrink: 0; }
 .form-btn { font-family: var(--font-sans); font-size: 0.88rem; font-weight: 500; padding: 0.625rem 1.5rem; border-radius: var(--radius-md); cursor: pointer; transition: all var(--transition-base); }
 .form-cancel { background: transparent; color: var(--text-secondary); border: 1px solid var(--border); }
 .form-cancel:hover:not(:disabled) { background: var(--bg-offset); color: var(--text-primary); }
@@ -124,9 +127,9 @@ defineExpose({ open })
 .btn-loading { display: flex; align-items: center; gap: 0.5rem; }
 
 @media (max-width: 639px) {
-  .form-header { padding: 1.375rem 1.25rem 0; }
-  .form-body { padding: 1.25rem 1.25rem 0.75rem; }
-  .form-footer { padding: 0.875rem 1.25rem 1.25rem; border-top: 1px solid var(--border); background: var(--card); }
-  .form-row { grid-template-columns: 1fr; gap: 0; }
+  .form-header { padding: 1.375rem 1.25rem 0.25rem; }
+  .form-body { padding: 1.25rem 1.25rem; }
+  .form-footer { padding: 0.875rem 1.25rem 1.25rem; }
 }
 </style>
+

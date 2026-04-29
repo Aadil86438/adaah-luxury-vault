@@ -1,16 +1,18 @@
 <template>
   <div>
-    <div class="stats-grid">
-      <div v-for="stat in stats" :key="stat.title" class="stat-card premium-card">
-        <div class="stat-header">
-          <span class="luxury-label stat-title">{{ stat.title }}</span>
-          <div class="stat-icon-wrap" :style="{ background: stat.bgColor }">
-            <v-icon :color="stat.iconColor" size="18">{{ stat.icon }}</v-icon>
+    <v-row class="mb-8">
+      <v-col v-for="stat in stats" :key="stat.title" cols="6" sm="6" md="3">
+        <v-card class="stat-card premium-card" flat color="white" rounded="lg">
+          <div class="stat-header">
+            <span class="luxury-label stat-title">{{ stat.title }}</span>
+            <div class="stat-icon-wrap" :style="{ background: stat.bgColor }">
+              <v-icon :color="stat.iconColor" size="18">{{ stat.icon }}</v-icon>
+            </div>
           </div>
-        </div>
-        <div class="stat-value serif-text">{{ stat.value }}</div>
-      </div>
-    </div>
+          <div class="stat-value serif-text">{{ stat.value }}</div>
+        </v-card>
+      </v-col>
+    </v-row>
     <h3 class="luxury-label activity-heading">Recent Activity</h3>
     <div class="activity-card premium-card">
       <div v-if="recentItems.length === 0" class="activity-empty"><p>No recent orders yet.</p></div>
@@ -61,15 +63,14 @@ onMounted(() => { fetchStats() })
 </script>
 
 <style scoped>
-.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-bottom: 3rem; }
-.stat-card { padding: 1.75rem 1.5rem; cursor: default; }
+.stat-card { padding: 1.75rem 1.5rem; cursor: default; background: white; }
 .stat-card:hover { transform: translateY(-3px) !important; }
 .stat-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
 .stat-title { color: var(--text-muted); }
 .stat-icon-wrap { width: 2.25rem; height: 2.25rem; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; }
 .stat-value { font-size: 2rem; color: var(--text-primary); line-height: 1; }
 .activity-heading { margin-bottom: 1.25rem; margin-top: 0.5rem; }
-.activity-card { cursor: default; padding: 0; overflow: hidden; }
+.activity-card { cursor: default; padding: 0; overflow: hidden; background: white; }
 .activity-card:hover { transform: none !important; }
 .activity-empty { padding: 2.5rem; text-align: center; color: var(--text-muted); font-family: var(--font-sans); font-size: 0.9rem; }
 .activity-item { display: flex; align-items: center; gap: 1rem; padding: 1.125rem 1.5rem; border-bottom: 1px solid var(--border); transition: background var(--transition-fast); }
@@ -81,9 +82,7 @@ onMounted(() => { fetchStats() })
 .activity-time { font-family: var(--font-sans); font-size: 0.78rem; color: var(--text-muted); margin-top: 0.125rem; }
 .activity-amount { font-family: var(--font-sans); font-size: 0.9rem; font-weight: 600; color: var(--primary-hover); flex-shrink: 0; }
 
-@media (max-width: 1024px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 639px) {
-  .stats-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
   .stat-card { padding: 1.25rem 1rem; }
   .stat-value { font-size: 1.6rem; }
   .activity-item { padding: 0.875rem 1rem; gap: 0.75rem; }

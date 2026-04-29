@@ -1,6 +1,6 @@
 <template>
-  <div class="admin-page">
-    <div class="admin-inner r-container r-container--admin">
+  <v-container fluid class="pa-0">
+    <v-container style="max-width: 1280px;" class="px-4 py-8 admin-container">
       <!-- Page Header -->
       <div class="admin-header">
         <div>
@@ -39,11 +39,11 @@
           <OrderTable />
         </div>
       </div>
-    </div>
+    </v-container>
 
     <ProductForm ref="productForm" @saved="refreshData" />
     <ConfirmDialog ref="confirmDialog" />
-  </div>
+  </v-container>
 </template>
 
 <script setup>
@@ -73,13 +73,8 @@ const refreshData = () => {
 </script>
 
 <style scoped>
-.admin-page {
-  min-height: 100vh;
-  background: transparent;
-}
-
-.admin-inner {
-  padding-top: clamp(2rem, 5vw, 7.5rem);
+.admin-container {
+  padding-top: clamp(2rem, 5vw, 4rem);
   padding-bottom: 5rem;
 }
 
@@ -169,11 +164,6 @@ const refreshData = () => {
 
 /* ── Mobile ── */
 @media (max-width: 639px) {
-  .admin-inner {
-    padding-top: var(--space-6);
-    padding-bottom: 3.75rem;
-  }
-
   .admin-header {
     flex-direction: column;
     align-items: flex-start;

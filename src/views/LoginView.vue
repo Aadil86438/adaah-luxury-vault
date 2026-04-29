@@ -1,64 +1,70 @@
 <template>
-  <div class="login-page">
-    <div class="login-card">
-      <!-- Brand Mark -->
-      <div class="login-brand">
-        <span class="login-logo serif-text">Adaah</span>
-        <span class="login-tagline luxury-label">Admin Portal</span>
-      </div>
+  <v-container fluid class="pa-0 fill-height login-page">
+    <v-container style="max-width: 1280px;" class="px-4 py-4 fill-height">
+      <v-row align="center" justify="center" class="fill-height">
+        <v-col cols="12" sm="8" md="6" lg="5" xl="4">
+          <div class="login-card">
+            <!-- Brand Mark -->
+            <div class="login-brand">
+              <span class="login-logo serif-text">Adaah</span>
+              <span class="login-tagline luxury-label">Admin Portal</span>
+            </div>
 
-      <!-- Heading -->
-      <div class="login-heading">
-        <h1 class="login-title serif-text">Welcome Back</h1>
-        <p class="login-subtitle">Sign in to manage your collection</p>
-      </div>
+            <!-- Heading -->
+            <div class="login-heading">
+              <h1 class="login-title serif-text">Welcome Back</h1>
+              <p class="login-subtitle">Sign in to manage your collection</p>
+            </div>
 
-      <!-- Form -->
-      <v-form @submit.prevent="handleLogin" v-model="formValid" class="login-form">
-        <v-text-field
-          v-model="email"
-          id="login-email"
-          label="Email Address"
-          type="email"
-          variant="outlined"
-          density="comfortable"
-          :rules="[v => !!v || 'Email is required', v => /.+@.+\..+/.test(v) || 'Email must be valid']"
-          required
-          autofocus
-          class="login-input"
-        />
+            <!-- Form -->
+            <v-form @submit.prevent="handleLogin" v-model="formValid" class="login-form">
+              <v-text-field
+                v-model="email"
+                id="login-email"
+                label="Email Address"
+                type="email"
+                variant="outlined"
+                density="comfortable"
+                :rules="[v => !!v || 'Email is required', v => /.+@.+\..+/.test(v) || 'Email must be valid']"
+                required
+                autofocus
+                class="login-input"
+              />
 
-        <v-text-field
-          v-model="password"
-          id="login-password"
-          label="Password"
-          type="password"
-          variant="outlined"
-          density="comfortable"
-          :rules="[v => !!v || 'Password is required']"
-          required
-          class="login-input"
-        />
+              <v-text-field
+                v-model="password"
+                id="login-password"
+                label="Password"
+                type="password"
+                variant="outlined"
+                density="comfortable"
+                :rules="[v => !!v || 'Password is required']"
+                required
+                class="login-input"
+              />
 
-        <button
-          id="login-submit"
-          type="submit"
-          class="btn-terra login-btn"
-          :disabled="!formValid || loading"
-          :class="{ disabled: !formValid || loading }"
-        >
-          <span v-if="loading" class="btn-loading">
-            <v-progress-circular size="16" width="2" indeterminate color="white" />
-            Signing in…
-          </span>
-          <span v-else>Sign In</span>
-        </button>
-      </v-form>
-    </div>
+              <button
+                id="login-submit"
+                type="submit"
+                class="btn-terra login-btn"
+                :disabled="!formValid || loading"
+                :class="{ disabled: !formValid || loading }"
+              >
+                <span v-if="loading" class="btn-loading">
+                  <v-progress-circular size="16" width="2" indeterminate color="white" />
+                  Signing in…
+                </span>
+                <span v-else>Sign In</span>
+              </button>
+            </v-form>
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
 
     <!-- Decorative Background -->
     <div class="login-deco" aria-hidden="true" />
-  </div>
+  </v-container>
 </template>
 
 <script setup>
@@ -96,11 +102,7 @@ const handleLogin = () => {
 <style scoped>
 .login-page {
   min-height: calc(100vh - var(--navbar-height));
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: transparent;
-  padding: 2.5rem var(--space-4);
   position: relative;
   overflow: hidden;
 }

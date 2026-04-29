@@ -1,7 +1,10 @@
 <template>
-  <div class="home-page">
+  <v-container fluid class="pa-0">
     <!-- ── Hero Section ── -->
     <section class="hero-section" aria-label="Hero">
+      <!-- Background Image specifically for Hero -->
+      <img src="../assets/golden-leaves-bg.png" class="hero-bg" alt="" aria-hidden="true" />
+      <div class="hero-overlay"></div>
 
       <!-- Tag + Headline at top-centre -->
       <div class="hero-content">
@@ -17,9 +20,9 @@
       </div>
     </section>
 
-    <!-- ── Products Section ── -->
-    <section id="products-section" class="products-section r-section">
-      <div class="r-container">
+    <v-container style="max-width: 1280px;" class="mx-auto px-4 py-8">
+      <!-- ── Products Section ── -->
+      <section id="products-section" class="products-section">
         <div class="section-header reveal-on-scroll">
           <span class="section-tag">♡ Our Collection</span>
           <h2 class="section-title serif-text">Best Sellers</h2>
@@ -41,11 +44,11 @@
           <p class="serif-text empty-title">No pieces found.</p>
           <button class="btn-outline" @click="activeCategory = 'All'">View All</button>
         </div>
-      </div>
-    </section>
+      </section>
+    </v-container>
 
     <ProductModal ref="productModal" />
-  </div>
+  </v-container>
 </template>
 
 <script setup>
@@ -99,8 +102,7 @@ onMounted(() => {
   position: relative;
   width: 100%;
   max-width: 100%;           /* prevent horizontal overflow */
-  min-height: 100dvh;        /* modern: respects browser chrome */
-  min-height: 100vh;         /* fallback */
+  min-height: 80vh;          /* required: 80vh desktop */
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -125,13 +127,7 @@ onMounted(() => {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(
-    to bottom,
-    rgba(245, 239, 230, 0.82) 0%,
-    rgba(245, 239, 230, 0.40) 28%,
-    rgba(245, 239, 230, 0.12) 55%,
-    rgba(245, 239, 230, 0.75) 100%
-  );
+  background: rgba(255, 255, 255, 0.75); /* required: white overlay */
   pointer-events: none;
 }
 
@@ -186,9 +182,7 @@ onMounted(() => {
 
 /* ── Products Section ── */
 .products-section {
-  background: var(--bg);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
+  background: transparent;
 }
 
 .section-header {
@@ -228,6 +222,10 @@ onMounted(() => {
 
 /* ── Mobile ── */
 @media (max-width: 639px) {
+  .hero-section {
+    min-height: 60vh; /* required: 60vh mobile */
+  }
+
   .hero-content {
     padding-top: 5rem;
     padding-left: var(--space-4);
