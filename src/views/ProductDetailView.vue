@@ -1,48 +1,51 @@
 <template>
-  <v-container class="py-12">
-    <v-row v-if="loading" justify="center">
-      <v-col cols="12" md="8">
+  <div class="product-detail-page">
+    <div class="r-container product-detail-inner">
+      <!-- Loading -->
+      <div v-if="loading" class="detail-skeleton">
         <v-skeleton-loader type="article, image, article"></v-skeleton-loader>
-      </v-col>
-    </v-row>
-    
-    <v-row v-else-if="product" justify="center">
-      <v-col cols="12" md="10">
-        <v-card class="premium-card overflow-hidden" flat border>
-          <v-row no-gutters>
-            <v-col cols="12" md="6">
-              <v-img :src="product.image_url" cover height="500"></v-img>
-            </v-col>
-            <v-col cols="12" md="6" class="pa-10">
-              <div class="text-caption luxury-text color-primary mb-2">{{ product.category }}</div>
-              <h1 class="text-h3 font-weight-bold mb-4">{{ product.name }}</h1>
-              
-              <div class="text-h4 color-secondary mb-8 font-weight-bold">
-                ₹ {{ parseFloat(product.price).toLocaleString() }}
-              </div>
+      </div>
 
-              <p class="text-body-1 opacity-70 mb-10 lineHeight-2">
-                {{ product.description }}
-              </p>
+      <!-- Product -->
+      <div v-else-if="product" class="detail-card premium-card">
+        <div class="detail-grid">
+          <div class="detail-image-col">
+            <v-img
+              :src="product.image_url"
+              cover
+              :aspect-ratio="4/5"
+              class="detail-image"
+            ></v-img>
+          </div>
+          <div class="detail-info-col">
+            <div class="text-caption luxury-text" style="color: var(--primary-hover); margin-bottom: 0.5rem;">{{ product.category }}</div>
+            <h1 class="detail-name serif-text">{{ product.name }}</h1>
 
-              <v-btn
-                color="primary"
-                variant="flat"
-                block
-                size="large"
-                class="rounded-pill luxury-text"
-                @click="openOrderModal"
-              >
-                Order via WhatsApp 💎
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-card>
-      </v-col>
-    </v-row>
+            <div class="detail-price">
+              ₹ {{ parseFloat(product.price).toLocaleString() }}
+            </div>
 
-    <ProductModal ref="productModal" />
-  </v-container>
+            <p class="detail-desc">
+              {{ product.description }}
+            </p>
+
+            <v-btn
+              color="primary"
+              variant="flat"
+              block
+              size="large"
+              class="rounded-pill luxury-text"
+              @click="openOrderModal"
+            >
+              Order via WhatsApp 💎
+            </v-btn>
+          </div>
+        </div>
+      </div>
+
+      <ProductModal ref="productModal" />
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -84,7 +87,87 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.lineHeight-2 {
+.product-detail-page {
+  min-height: calc(100vh - var(--navbar-height));
+  background: transparent;
+}
+
+.product-detail-inner {
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-10);
+}
+
+.detail-skeleton {
+  max-width: 50rem;
+  margin: 0 auto;
+}
+
+.detail-card {
+  overflow: hidden;
+  cursor: default;
+}
+
+.detail-card:hover {
+  transform: none !important;
+}
+
+/* ── Grid Layout ── */
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.detail-image-col {
+  overflow: hidden;
+  background: var(--bg-offset);
+}
+
+.detail-info-col {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.detail-name {
+  font-size: clamp(1.6rem, 3.5vw, 2rem);
+  margin-bottom: 1rem;
+}
+
+.detail-price {
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-hover);
+  margin-bottom: 2rem;
+}
+
+.detail-desc {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
   line-height: 2;
+  color: var(--text-secondary);
+  margin-bottom: 2.5rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-image-col {
+    max-height: 50vh;
+  }
+}
+
+@media (max-width: 639px) {
+  .product-detail-inner {
+    padding-top: var(--space-6);
+  }
+
+  .detail-info-col {
+    padding: 1.5rem;
+  }
 }
 </style>

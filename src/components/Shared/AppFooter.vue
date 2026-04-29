@@ -1,13 +1,15 @@
 <template>
   <footer class="footer-root">
-    <div class="footer-inner">
+    <div class="footer-inner r-container">
       <div class="footer-grid">
 
         <!-- Brand Column -->
         <div class="footer-brand-col">
           <div class="footer-logo serif-text">Adah</div>
           <p class="footer-tagline">
-            Fine jewelry, handcrafted for the modern soul. Every piece tells a story of passion and heritage.
+            Jewellery for people who actually live in it.  
+Shower, gym, sleep, repeat — it still shines.  
+Anti-tarnish, skin-safe, and designed for your everyday.
           </p>
           <div class="footer-social">
             <!-- <a
@@ -39,9 +41,6 @@
             </a> -->
           </div>
         </div>
-
-        <!-- Spacer -->
-        <div class="footer-spacer" />
 
         <!-- Discover Column -->
         <div class="footer-link-col">
@@ -81,25 +80,22 @@
 <style scoped>
 .footer-root {
   background: var(--bg-offset);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   border-top: 1px solid var(--border);
 }
 
 .footer-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 72px 32px 40px;
+  padding-top: 4.5rem;
+  padding-bottom: 2.5rem;
 }
 
 /* ── Grid ── */
 .footer-grid {
   display: grid;
-  grid-template-columns: 1fr auto 160px 200px;
-  gap: 40px;
+  grid-template-columns: 1fr auto auto;
+  gap: 2.5rem 4rem;
   align-items: start;
-}
-
-.footer-spacer {
-  width: 48px;
 }
 
 /* ── Brand ── */
@@ -107,7 +103,7 @@
   font-size: 2.2rem;
   letter-spacing: 0.03em;
   color: var(--text-primary);
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 .footer-tagline {
@@ -115,22 +111,22 @@
   font-size: 0.9rem;
   color: var(--text-secondary);
   line-height: 1.7;
-  max-width: 300px;
-  margin-bottom: 24px;
+  max-width: 18.75rem;
+  margin-bottom: 1.5rem;
 }
 
 /* ── Social Buttons ── */
 .footer-social {
   display: flex;
-  gap: 10px;
+  gap: 0.625rem;
 }
 
 .social-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 2.25rem;
+  height: 2.25rem;
   border-radius: 50%;
   background: var(--primary-muted);
   color: var(--primary-hover);
@@ -148,7 +144,7 @@
 
 /* ── Link Columns ── */
 .footer-heading {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .footer-links {
@@ -157,7 +153,7 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0.75rem;
 }
 
 .footer-link {
@@ -182,7 +178,7 @@
 .footer-divider {
   height: 1px;
   background: var(--border);
-  margin: 48px 0 24px;
+  margin: 3rem 0 1.5rem;
 }
 
 .footer-copy {
@@ -194,14 +190,10 @@
 }
 
 /* ── Responsive ── */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .footer-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 40px 24px;
-  }
-
-  .footer-spacer {
-    display: none;
+    gap: 2.5rem 1.5rem;
   }
 
   .footer-brand-col {
@@ -209,14 +201,15 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 639px) {
   .footer-inner {
-    padding: 56px 20px 32px;
+    padding-top: 3.5rem;
+    padding-bottom: 2rem;
   }
 
   .footer-grid {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 2rem;
   }
 
   .footer-tagline {

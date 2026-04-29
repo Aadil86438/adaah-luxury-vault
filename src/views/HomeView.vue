@@ -2,9 +2,6 @@
   <div class="home-page">
     <!-- ── Hero Section ── -->
     <section class="hero-section" aria-label="Hero">
-      <!-- Full-cover background image -->
-      <img src="/src/assets/adah-logo.jpeg" alt="" class="hero-bg" aria-hidden="true" />
-      <div class="hero-overlay"></div>
 
       <!-- Tag + Headline at top-centre -->
       <div class="hero-content">
@@ -21,8 +18,8 @@
     </section>
 
     <!-- ── Products Section ── -->
-    <section id="products-section" class="products-section">
-      <div class="products-inner">
+    <section id="products-section" class="products-section r-section">
+      <div class="r-container">
         <div class="section-header reveal-on-scroll">
           <span class="section-tag">♡ Our Collection</span>
           <h2 class="section-title serif-text">Best Sellers</h2>
@@ -146,10 +143,10 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 90px 24px 0;    /* 90px top = above navbar + breathing room */
-  max-width: 640px;
-  width: 100%;             /* fill parent width up to max-width */
-  box-sizing: border-box;  /* padding doesn't expand width */
+  padding: clamp(5rem, 12vw, 5.625rem) var(--space-5) 0;
+  max-width: 40rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .hero-tag {
@@ -158,7 +155,7 @@ onMounted(() => {
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--primary-hover);
-  margin-bottom: 18px;
+  margin-bottom: 1.125rem;
   font-weight: 600;
 }
 
@@ -175,32 +172,27 @@ onMounted(() => {
 .hero-bottom {
   position: relative;
   z-index: 2;
-  padding: 0 24px 52px;
+  padding: 0 var(--space-5) 3.25rem;
   display: flex;
   justify-content: center;
 }
 
 .hero-cta {
   font-size: 0.95rem;
-  padding: 14px 44px !important;
+  padding: 0.875rem 2.75rem !important;
   border-radius: var(--radius-md) !important;
-  min-width: 200px;
+  min-width: 12.5rem;
 }
 
 /* ── Products Section ── */
 .products-section {
   background: var(--bg);
-  padding: var(--space-9) 0 var(--space-10);
-}
-
-.products-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 32px;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
 
 .section-header {
-  margin-bottom: 32px;
+  margin-bottom: var(--space-6);
   text-align: center;
 }
 
@@ -212,7 +204,7 @@ onMounted(() => {
   color: var(--primary-hover);
   font-weight: 500;
   display: block;
-  margin-bottom: 12px;
+  margin-bottom: 0.75rem;
 }
 
 .section-title {
@@ -220,26 +212,26 @@ onMounted(() => {
   color: var(--text-primary);
 }
 
-.mb-filter { margin-bottom: 40px; }
+.mb-filter { margin-bottom: 2.5rem; }
 
 .empty-state {
   text-align: center;
-  padding: 80px 0;
+  padding: 5rem 0;
 }
 
 .empty-title {
   font-size: 1.5rem;
   color: var(--text-primary);
   opacity: 0.5;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 /* ── Mobile ── */
-@media (max-width: 599px) {
+@media (max-width: 639px) {
   .hero-content {
-    padding-top: 80px;   /* navbar is 68px — 80px gives enough breathing room */
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-top: 5rem;
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
   }
 
   .hero-title {
@@ -247,10 +239,7 @@ onMounted(() => {
   }
 
   .hero-bottom {
-    padding-bottom: 40px;
+    padding-bottom: 2.5rem;
   }
-
-  .products-inner { padding: 0 16px; }
-  .products-section { padding: 56px 0 72px; }
 }
 </style>

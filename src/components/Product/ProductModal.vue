@@ -1,21 +1,10 @@
 <template>
-  <v-dialog v-model="show" max-width="860px" scrim="rgba(30,15,10,0.65)" :max-height="$vuetify.display.xs ? '92dvh' : undefined">
+  <v-dialog v-model="show" max-width="860px" scrim="rgba(30,15,10,0.65)">
     <div v-if="product" class="modal-root">
-
       <div class="modal-grid">
-        <!-- Left: Product Image -->
         <div class="modal-image-col">
-          <v-img
-            :src="product.image_url || 'https://placehold.co/600x600/FAF7F2/D97A6C?text=Adah'"
-            cover
-            height="100%"
-            position="center 30%"
-            class="modal-image"
-            :max-height="$vuetify.display.xs ? '230px' : '100%'"
-          />
+          <v-img :src="product.image_url || 'https://placehold.co/600x600/FAF7F2/D97A6C?text=Adah'" cover height="100%" position="center 30%" class="modal-image" />
         </div>
-
-        <!-- Right: Product Details -->
         <div class="modal-detail-col">
           <div class="modal-header">
             <div>
@@ -28,75 +17,27 @@
               <v-icon size="20">mdi-close</v-icon>
             </button>
           </div>
-
           <p class="modal-desc">{{ product.description }}</p>
           <div class="modal-divider" />
           <p class="modal-order-label">📦 Quick Order via WhatsApp</p>
-
           <v-form @submit.prevent="placeOrder" v-model="formValid" class="modal-form">
             <div class="form-row">
-              <v-text-field
-                v-model="customerName"
-                label="Your Name"
-                variant="outlined"
-                density="comfortable"
-                :rules="nameRules"
-                hide-details="auto"
-                class="form-field"
-                maxlength="50"
-                autocomplete="name"
-              />
-              <v-text-field
-                v-model="customerPhone"
-                label="WhatsApp Number"
-                variant="outlined"
-                density="comfortable"
-                :rules="phoneRules"
-                hide-details="auto"
-                class="form-field"
-                type="tel"
-                inputmode="numeric"
-                maxlength="10"
-                prefix="+91"
-                autocomplete="tel"
-                @input="sanitizePhone"
-              />
+              <v-text-field v-model="customerName" label="Your Name" variant="outlined" density="comfortable" :rules="nameRules" hide-details="auto" class="form-field" maxlength="50" autocomplete="name" />
+              <v-text-field v-model="customerPhone" label="WhatsApp Number" variant="outlined" density="comfortable" :rules="phoneRules" hide-details="auto" class="form-field" type="tel" inputmode="numeric" maxlength="10" prefix="+91" autocomplete="tel" @input="sanitizePhone" />
             </div>
-
-            <!-- Inline button — desktop only -->
-            <button
-              type="submit"
-              class="btn-terra modal-order-btn modal-order-btn--desktop"
-              :class="{ disabled: !formValid || loading }"
-              :disabled="!formValid || loading"
-            >
-              <span v-if="loading" class="btn-loading">
-                <v-progress-circular size="16" width="2" indeterminate color="white" />
-                Opening WhatsApp…
-              </span>
+            <button type="submit" class="btn-terra modal-order-btn modal-order-btn--desktop" :class="{ disabled: !formValid || loading }" :disabled="!formValid || loading">
+              <span v-if="loading" class="btn-loading"><v-progress-circular size="16" width="2" indeterminate color="white" /> Opening WhatsApp…</span>
               <span v-else>Shop Now 🛍</span>
             </button>
           </v-form>
         </div>
       </div>
-
-      <!-- Sticky footer button — mobile only -->
       <div class="modal-sticky-footer">
-        <button
-          type="button"
-          class="btn-terra modal-order-btn"
-          :class="{ disabled: !formValid || loading }"
-          :disabled="!formValid || loading"
-          @click="placeOrder"
-        >
-          <span v-if="loading" class="btn-loading">
-            <v-progress-circular size="16" width="2" indeterminate color="white" />
-            Opening WhatsApp…
-          </span>
+        <button type="button" class="btn-terra modal-order-btn" :class="{ disabled: !formValid || loading }" :disabled="!formValid || loading" @click="placeOrder">
+          <span v-if="loading" class="btn-loading"><v-progress-circular size="16" width="2" indeterminate color="white" /> Opening WhatsApp…</span>
           <span v-else>Shop Now 🛍</span>
         </button>
       </div>
-
     </div>
   </v-dialog>
 </template>
@@ -114,22 +55,17 @@ const customerPhone = ref('')
 const formValid = ref(false)
 const loading = ref(false)
 
-// ── Validation Rules ──
 const nameRules = [
-  v => !!v?.trim()            || 'Name is required',
-  v => v?.trim().length >= 2  || 'Must be at least 2 characters',
+  v => !!v?.trim() || 'Name is required',
+  v => v?.trim().length >= 2 || 'Must be at least 2 characters',
   v => /^[a-zA-Z\s'-]+$/.test(v?.trim()) || 'Letters only'
 ]
-
 const phoneRules = [
-  v => !!v                    || 'Phone number is required',
-  v => /^\d+$/.test(v)       || 'Only digits are allowed',
-  v => v?.length === 10       || 'Must be exactly 10 digits'
+  v => !!v || 'Phone number is required',
+  v => /^\d+$/.test(v) || 'Only digits are allowed',
+  v => v?.length === 10 || 'Must be exactly 10 digits'
 ]
-
-const sanitizePhone = () => {
-  customerPhone.value = customerPhone.value.replace(/\D/g, '').slice(0, 10)
-}
+const sanitizePhone = () => { customerPhone.value = customerPhone.value.replace(/\D/g, '').slice(0, 10) }
 
 const open = (pProduct) => {
   product.value = pProduct
@@ -138,258 +74,61 @@ const open = (pProduct) => {
   show.value = true
 }
 
-// Save order → open WhatsApp directly
 const placeOrder = () => {
   if (!formValid.value) return
   loading.value = true
-
-  const lOrderData = {
-    user_name: customerName.value,
-    phone: customerPhone.value,
-    product_name: product.value.name,
-    price: product.value.price
-  }
-
+  const lOrderData = { user_name: customerName.value, phone: customerPhone.value, product_name: product.value.name, price: product.value.price }
   SupabaseService.createOrder(lOrderData).then(() => {
-    const lMessage = `✨ ADAH JEWELRY ORDER ✨
-🛍 Product: ${product.value.name}
-💰 Price: ₹${parseFloat(product.value.price).toLocaleString('en-IN')}
-
-👤 Customer:
-Name: ${customerName.value}
-Phone: +91${customerPhone.value}
-
-🕒 Date: ${new Date().toLocaleString()}
-
-Thank you for choosing Adah 💎`
-
+    const lMessage = `✨ ADAH JEWELRY ORDER ✨\n🛍 Product: ${product.value.name}\n💰 Price: ₹${parseFloat(product.value.price).toLocaleString('en-IN')}\n\n👤 Customer:\nName: ${customerName.value}\nPhone: +91${customerPhone.value}\n\n🕒 Date: ${new Date().toLocaleString()}\n\nThank you for choosing Adah 💎`
     window.open(`https://wa.me/918643839796?text=${encodeURIComponent(lMessage)}`, '_blank')
     show.value = false
   }).catch((pError) => {
     store.dispatch('snackbar/show', { text: pError.message || 'Failed to place order', color: 'error' })
-  }).finally(() => {
-    loading.value = false
-  })
+  }).finally(() => { loading.value = false })
 }
 
 defineExpose({ open })
 </script>
 
 <style scoped>
-/* ── Modal Root ── */
-.modal-root {
-  background: var(--card);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  position: relative;
-  width: 100%;          /* fill the v-dialog width fully */
-}
-
-/* ── Grid ── */
-.modal-grid {
-  display: grid;
-  grid-template-columns: 5fr 7fr;
-  min-height: 480px;
-}
-
-/* ── Image Column ── */
-.modal-image-col {
-  overflow: hidden;
-  background: var(--bg-offset);
-}
-
-.modal-image {
-  height: 100%;
-  /* Ensure product subject stays centered inside its cropped frame */
-  object-position: center center;
-}
-
-/* ── Detail Column ── */
-.modal-detail-col {
-  padding: 40px 44px;
-  background: var(--card);
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  max-height: 80vh;
-}
-
-/* ── Header ── */
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 20px;
-}
-
-.modal-category { display: block; margin-bottom: 8px; }
-
-.modal-title {
-  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-  color: var(--text-primary);
-  line-height: 1.1;
-  margin-bottom: 10px;
-}
-
-.modal-badge { margin-bottom: 8px; }
-
-.modal-price {
-  font-family: var(--font-sans);
-  font-size: 1.45rem;
-  font-weight: 700;
-  color: var(--primary-hover);
-  margin-top: 6px;
-}
-
-/* ── Close Button ── */
-.modal-close-desktop {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: var(--bg-offset);
-  color: var(--text-secondary);
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: background var(--transition-fast);
-}
+.modal-root { background: var(--card); border-radius: var(--radius-xl); overflow: hidden; position: relative; width: 100%; }
+.modal-grid { display: grid; grid-template-columns: 5fr 7fr; min-height: 0; }
+.modal-image-col { overflow: hidden; background: var(--bg-offset); }
+.modal-image { height: 100%; object-position: center center; }
+.modal-detail-col { padding: 2.5rem 2.75rem; background: var(--card); display: flex; flex-direction: column; overflow-y: auto; max-height: 80vh; }
+.modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem; }
+.modal-category { display: block; margin-bottom: 0.5rem; }
+.modal-title { font-size: clamp(1.6rem, 3.5vw, 2.2rem); color: var(--text-primary); line-height: 1.1; margin-bottom: 0.625rem; }
+.modal-badge { margin-bottom: 0.5rem; }
+.modal-price { font-family: var(--font-sans); font-size: 1.45rem; font-weight: 700; color: var(--primary-hover); margin-top: 0.375rem; }
+.modal-close-desktop { width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--bg-offset); color: var(--text-secondary); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: background var(--transition-fast); }
 .modal-close-desktop:hover { background: var(--border); color: var(--text-primary); }
-
-/* ── Description ── */
-.modal-desc {
-  font-family: var(--font-sans);
-  font-size: 0.93rem;
-  line-height: 1.75;
-  color: var(--text-secondary);
-  margin-bottom: 24px;
-}
-
-/* ── Divider ── */
-.modal-divider {
-  height: 1px;
-  background: var(--border);
-  margin-bottom: 24px;
-}
-
-/* ── Order Form ── */
-.modal-order-label {
-  font-family: var(--font-sans);
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 16px;
-}
-
+.modal-desc { font-family: var(--font-sans); font-size: 0.93rem; line-height: 1.75; color: var(--text-secondary); margin-bottom: 1.5rem; }
+.modal-divider { height: 1px; background: var(--border); margin-bottom: 1.5rem; }
+.modal-order-label { font-family: var(--font-sans); font-size: 0.88rem; font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; }
 .modal-form { display: flex; flex-direction: column; gap: 0; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.25rem; }
+.modal-order-btn { width: 100%; text-align: center; padding: 0.875rem 1.75rem !important; border-radius: var(--radius-md) !important; font-size: 0.95rem; }
+.modal-order-btn.disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
+.btn-loading { display: flex; align-items: center; gap: 0.625rem; justify-content: center; }
+.modal-sticky-footer { padding: 1rem 1.25rem; background: var(--card); border-top: 1px solid var(--border); flex-shrink: 0; }
 
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.modal-order-btn {
-  width: 100%;
-  text-align: center;
-  padding: 14px 28px !important;
-  border-radius: var(--radius-md) !important;
-  font-size: 0.95rem;
-}
-
-.modal-order-btn.disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-.btn-loading {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  justify-content: center;
-}
-
-/* ── Sticky Footer Button ── */
-.modal-sticky-footer {
-  padding: 16px 20px;
-  background: var(--card);
-  border-top: 1px solid var(--border);
-  flex-shrink: 0;
-}
-
-/* ── Mobile ── */
-@media (max-width: 768px) {
-  .modal-root {
-    display: flex;
-    flex-direction: column;
-    max-height: 92dvh;
-    max-height: 92vh;
-    overflow: hidden;
-  }
-
-  /* Switch grid to flex-column so image and detail share height properly */
-  .modal-grid {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
-  }
-
-  .modal-image-col {
-    height: 220px;
-    flex-shrink: 0;   /* image never shrinks */
-    display: flex;    /* ensures v-img fills the column */
-    align-items: stretch;
-  }
-
-  .modal-image {
-    height: 220px;
-    max-height: 220px;
-    width: 100%;       /* fill container width exactly */
-    object-position: center 30%; /* keep jewelry subject visible */
-  }
-
-  .modal-detail-col {
-    flex: 1;           /* takes all remaining height */
-    min-height: 0;
-    padding: 20px 20px 16px;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    max-height: none;
-  }
-
+@media (max-width: 1024px) {
+  .modal-root { display: flex; flex-direction: column; max-height: 92dvh; max-height: 92vh; overflow: hidden; }
+  .modal-grid { display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; }
+  .modal-image-col { height: clamp(11.875rem, 30vw, 13.75rem); flex-shrink: 0; display: flex; align-items: stretch; }
+  .modal-image { height: 100%; max-height: 100%; width: 100%; object-position: center 30%; }
+  .modal-detail-col { flex: 1; min-height: 0; padding: 1.25rem; overflow-y: auto; -webkit-overflow-scrolling: touch; max-height: none; }
   .modal-order-btn:not(.modal-sticky-footer .modal-order-btn) { display: none; }
-
-  .form-row {
-    grid-template-columns: 1fr;
-    gap: 10px;
-    margin-bottom: 8px;
-  }
+  .form-row { grid-template-columns: 1fr; gap: 0.625rem; margin-bottom: 0.5rem; }
 }
-
-/* On desktop: hide sticky footer, show inline button */
-@media (min-width: 769px) {
+@media (min-width: 1025px) {
   .modal-sticky-footer { display: none; }
   .modal-order-btn--desktop { display: block; }
   .modal-form { margin-bottom: 0; }
 }
-
-@media (max-width: 480px) {
-  .modal-image-col {
-    height: 190px;
-  }
-  .modal-image {
-    height: 190px;
-    max-height: 190px;
-    width: 100%;
-    object-position: center 30%;
-  }
-  .modal-detail-col {
-    padding: 16px 20px 12px; /* slightly wider side padding for readability */
-  }
+@media (max-width: 639px) {
+  .modal-image-col { height: clamp(10rem, 28vw, 11.875rem); }
+  .modal-detail-col { padding: 1rem 1.25rem 0.75rem; }
 }
 </style>

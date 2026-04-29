@@ -124,8 +124,8 @@ const handleLogout = () => {
   color: var(--text-primary);
   cursor: pointer;
   user-select: none;
-  flex-shrink: 0;           /* never let brand text get squished */
-  white-space: nowrap;      /* prevent wrapping */
+  flex-shrink: 0;
+  white-space: nowrap;
   transition: opacity var(--transition-fast);
 }
 
@@ -135,7 +135,7 @@ const handleLogout = () => {
 
 /* ── Nav Links ── */
 .navbar-links {
-  gap: 4px;
+  gap: 0.25rem;
 }
 
 .navbar-icon-btn {
@@ -171,7 +171,7 @@ const handleLogout = () => {
 }
 
 .drawer-content {
-  padding: 32px 24px 24px;
+  padding: 2rem 1.5rem 1.5rem;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -181,25 +181,25 @@ const handleLogout = () => {
   font-size: 2rem;
   letter-spacing: 0.04em;
   color: var(--text-primary);
-  margin-bottom: 28px;
+  margin-bottom: 1.75rem;
 }
 
 .drawer-divider {
   border-color: var(--border) !important;
-  margin-bottom: 24px;
+  margin-bottom: 1.5rem;
 }
 
 .drawer-nav {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0.25rem;
 }
 
 .drawer-link {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
   border-radius: var(--radius-md);
   font-family: var(--font-sans);
   font-size: 0.9rem;
@@ -221,7 +221,7 @@ const handleLogout = () => {
 
 .drawer-logout {
   color: #C0392B;
-  margin-top: 8px;
+  margin-top: 0.5rem;
 }
 
 .drawer-logout:hover {

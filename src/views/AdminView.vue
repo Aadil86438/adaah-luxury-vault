@@ -1,6 +1,6 @@
 <template>
   <div class="admin-page">
-    <div class="admin-inner">
+    <div class="admin-inner r-container r-container--admin">
       <!-- Page Header -->
       <div class="admin-header">
         <div>
@@ -75,13 +75,12 @@ const refreshData = () => {
 <style scoped>
 .admin-page {
   min-height: 100vh;
-  background: var(--bg);
+  background: transparent;
 }
 
 .admin-inner {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 120px 32px 80px;
+  padding-top: clamp(2rem, 5vw, 7.5rem);
+  padding-bottom: 5rem;
 }
 
 /* ── Header ── */
@@ -89,15 +88,15 @@ const refreshData = () => {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 40px;
-  gap: 16px;
+  margin-bottom: 2.5rem;
+  gap: var(--space-4);
   flex-wrap: wrap;
 }
 
 .admin-title {
-  font-size: 2.4rem;
+  font-size: clamp(1.75rem, 4vw, 2.4rem);
   color: var(--text-primary);
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 
 .admin-subtitle {
@@ -109,9 +108,9 @@ const refreshData = () => {
 .admin-add-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 0.375rem;
   white-space: nowrap;
-  padding: 12px 24px !important;
+  padding: 0.75rem 1.5rem !important;
   font-size: 0.9rem;
   border-radius: var(--radius-md) !important;
 }
@@ -119,15 +118,17 @@ const refreshData = () => {
 /* ── Tabs ── */
 .admin-tabs {
   display: flex;
-  gap: 4px;
+  gap: 0.25rem;
   border-bottom: 1px solid var(--border);
-  margin-bottom: 36px;
+  margin-bottom: 2.25rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .admin-tab {
   display: inline-flex;
   align-items: center;
-  padding: 12px 20px;
+  padding: 0.75rem 1.25rem;
   border-radius: var(--radius-md) var(--radius-md) 0 0;
   font-family: var(--font-sans);
   font-size: 0.85rem;
@@ -141,6 +142,7 @@ const refreshData = () => {
   transition: all var(--transition-base);
   position: relative;
   bottom: -1px;
+  white-space: nowrap;
 }
 
 .admin-tab:hover {
@@ -155,10 +157,6 @@ const refreshData = () => {
 }
 
 /* ── Content ── */
-.admin-content {
-  min-height: 400px;
-}
-
 .admin-table-card {
   overflow: hidden;
   cursor: default;
@@ -170,24 +168,20 @@ const refreshData = () => {
 }
 
 /* ── Mobile ── */
-@media (max-width: 599px) {
+@media (max-width: 639px) {
   .admin-inner {
-    padding: 32px 16px 60px;
+    padding-top: var(--space-6);
+    padding-bottom: 3.75rem;
   }
 
   .admin-header {
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 28px;
-  }
-
-  .admin-tabs {
-    overflow-x: auto;
+    margin-bottom: 1.75rem;
   }
 
   .admin-tab {
-    padding: 10px 14px;
-    white-space: nowrap;
+    padding: 0.625rem 0.875rem;
     font-size: 0.8rem;
   }
 }

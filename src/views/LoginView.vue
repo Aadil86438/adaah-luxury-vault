@@ -95,12 +95,12 @@ const handleLogin = () => {
 
 <style scoped>
 .login-page {
-  min-height: calc(100vh - 68px);
+  min-height: calc(100vh - var(--navbar-height));
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg);
-  padding: 40px 16px;
+  background: transparent;
+  padding: 2.5rem var(--space-4);
   position: relative;
   overflow: hidden;
 }
@@ -110,8 +110,8 @@ const handleLogin = () => {
   position: absolute;
   top: -20%;
   right: -10%;
-  width: 600px;
-  height: 600px;
+  width: clamp(20rem, 50vw, 37.5rem);
+  height: clamp(20rem, 50vw, 37.5rem);
   border-radius: 50%;
   background: radial-gradient(circle, rgba(230, 167, 155, 0.12) 0%, transparent 70%);
   pointer-events: none;
@@ -120,12 +120,14 @@ const handleLogin = () => {
 /* ── Card ── */
 .login-card {
   width: 100%;
-  max-width: 420px;
-  background: var(--card);
+  max-width: 26.25rem;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
-  padding: 48px 44px 52px;
+  padding: 3rem 2.75rem 3.25rem;
   position: relative;
   z-index: 1;
 }
@@ -135,8 +137,8 @@ const handleLogin = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 36px;
-  gap: 6px;
+  margin-bottom: 2.25rem;
+  gap: 0.375rem;
 }
 
 .login-logo {
@@ -151,14 +153,14 @@ const handleLogin = () => {
 
 /* ── Heading ── */
 .login-heading {
-  margin-bottom: 32px;
+  margin-bottom: var(--space-6);
   text-align: center;
 }
 
 .login-title {
   font-size: 1.7rem;
   color: var(--text-primary);
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 
 .login-subtitle {
@@ -171,7 +173,7 @@ const handleLogin = () => {
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .login-input {
@@ -180,11 +182,11 @@ const handleLogin = () => {
 
 .login-btn {
   width: 100%;
-  padding: 14px 28px !important;
+  padding: 0.875rem 1.75rem !important;
   border-radius: var(--radius-md) !important;
   font-size: 0.95rem;
   border: none;
-  margin-top: 12px;
+  margin-top: 0.75rem;
   text-align: center;
   cursor: pointer;
 }
@@ -198,14 +200,14 @@ const handleLogin = () => {
 .btn-loading {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0.625rem;
   justify-content: center;
 }
 
 /* ── Mobile ── */
-@media (max-width: 480px) {
+@media (max-width: 639px) {
   .login-card {
-    padding: 40px 28px 44px;
+    padding: 2.5rem 1.75rem 2.75rem;
   }
 
   .login-logo {
