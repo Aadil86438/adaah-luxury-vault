@@ -445,6 +445,14 @@ defineExpose({ open })
     overflow: hidden;
   }
 
+  .modal-root > .v-row {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+
   .modal-image-col {
     max-height: clamp(10rem, 30vw, 14rem);
     flex-shrink: 0;
