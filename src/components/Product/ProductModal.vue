@@ -43,6 +43,10 @@
             </v-btn>
           </div>
 
+          <p class="modal-desc">{{ product.description }}</p>
+          <v-divider class="mb-4" />
+          <p class="modal-order-label">📦 Quick Order via WhatsApp</p>
+
           <!-- Quantity Selector -->
           <div class="qty-row">
             <span class="qty-label">Quantity</span>
@@ -56,9 +60,6 @@
             Total: <strong>₹ {{ totalPrice.toLocaleString('en-IN') }}</strong>
           </div>
 
-          <p class="modal-desc">{{ product.description }}</p>
-          <v-divider class="mb-4" />
-          <p class="modal-order-label">📦 Quick Order via WhatsApp</p>
           <v-form @submit.prevent="placeOrder" v-model="formValid" class="modal-form">
             <v-text-field
               v-model="customerName"
@@ -186,7 +187,7 @@ const open = (pProduct) => {
 const placeOrder = () => {
   if (!formValid.value) return
   loading.value = true
-  const lOrderData = { user_name: customerName.value, phone: customerPhone.value, product_name: product.value.name, price: totalPrice.value, quantity: quantity.value }
+  const lOrderData = { user_name: customerName.value, phone: customerPhone.value, product_name: product.value.name, price: product.value.price, quantity: quantity.value, total_price: totalPrice.value }
   SupabaseService.createOrder(lOrderData).then(() => {
     const lDate = new Date().toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true })
     const lUnitPrice = parseFloat(product.value.price).toLocaleString('en-IN')

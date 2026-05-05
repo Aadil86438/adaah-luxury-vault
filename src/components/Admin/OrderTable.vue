@@ -6,7 +6,8 @@
           <th class="luxury-label">Customer</th>
           <th class="luxury-label">Phone</th>
           <th class="luxury-label">Product</th>
-          <th class="luxury-label">Price</th>
+          <th class="luxury-label">Qty</th>
+          <th class="luxury-label">Total</th>
           <th class="luxury-label">Date</th>
         </tr>
       </thead>
@@ -20,10 +21,11 @@
           </td>
           <td class="order-phone">{{ order.phone }}</td>
           <td class="order-product">{{ order.product_name }}</td>
-          <td><span class="order-price">₹{{ parseFloat(order.price).toLocaleString('en-IN') }}</span></td>
+          <td class="order-qty">{{ order.quantity || 1 }}</td>
+          <td><span class="order-price">₹{{ parseFloat(order.total_price || order.price).toLocaleString('en-IN') }}</span></td>
           <td class="order-date">{{ new Date(order.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) }}</td>
         </tr>
-        <tr v-if="orders.length === 0"><td colspan="5" class="table-empty">No orders found.</td></tr>
+        <tr v-if="orders.length === 0"><td colspan="6" class="table-empty">No orders found.</td></tr>
       </tbody>
     </table>
   </div>
@@ -51,6 +53,7 @@ onMounted(() => fetchOrders())
 .customer-name { font-weight: 500; color: var(--text-primary); }
 .order-phone { color: var(--text-secondary); }
 .order-product { color: var(--text-primary); max-width: 12.5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.order-qty { font-weight: 500; color: var(--text-primary); text-align: center; }
 .order-price { font-weight: 600; color: var(--primary-hover); }
 .order-date { color: var(--text-muted); white-space: nowrap; }
 .table-empty { padding: 3.75rem !important; text-align: center; color: var(--text-muted); font-size: 0.9rem; }

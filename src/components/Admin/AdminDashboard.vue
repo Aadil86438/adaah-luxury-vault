@@ -47,12 +47,12 @@ const fetchStats = () => {
   })
   SupabaseService.getOrders().then(({ data }) => {
     stats.value[2].value = data?.length || 0
-    const lRevenue = data?.reduce((acc, curr) => acc + parseFloat(curr.price), 0) || 0
+    const lRevenue = data?.reduce((acc, curr) => acc + parseFloat(curr.total_price || curr.price), 0) || 0
     stats.value[3].value = `₹${lRevenue.toLocaleString('en-IN')}`
     recentItems.value = data?.slice(0, 5).map(o => ({
       title: `Order from ${o.user_name}`,
       time: new Date(o.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
-      amount: `₹${parseFloat(o.price).toLocaleString('en-IN')}`,
+      amount: `₹${parseFloat(o.total_price || o.price).toLocaleString('en-IN')}`,
       icon: 'mdi-account-circle-outline',
       color: 'primary'
     })) || []
