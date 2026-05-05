@@ -1,6 +1,6 @@
 <template>
   <footer class="footer-root">
-    <v-container style="max-width: 1280px;" class="px-4 py-8">
+    <v-container style="max-width: 1280px; margin: 0 auto;" class="px-4 py-8">
       <v-row>
         <!-- Brand Column -->
         <v-col cols="12" md="6" class="footer-brand-col">

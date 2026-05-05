@@ -2,7 +2,7 @@
   <v-app :theme="darkMode ? 'adaahDarkTheme' : 'adaahLightTheme'">
     <AppNavbar />
 
-    <v-main>
+    <v-main style="background: var(--bg);">
       <router-view v-slot="{ Component }">
         <transition name="fade" mode="out-in">
           <component :is="Component" />

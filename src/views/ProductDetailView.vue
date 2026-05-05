@@ -1,6 +1,6 @@
 <template>
   <v-container fluid class="pa-0">
-    <v-container style="max-width: 1280px;" class="px-4 py-8">
+    <v-container style="max-width: 1280px; margin: 0 auto;" class="px-4 py-8">
       <!-- Loading -->
       <div v-if="loading" class="detail-skeleton">
         <v-skeleton-loader type="article, image, article"></v-skeleton-loader>
@@ -12,7 +12,7 @@
           <v-col cols="12" md="6" class="detail-image-col">
             <v-img
               :src="product.image_url"
-              cover
+              contain
               :aspect-ratio="4/5"
               class="detail-image"
             ></v-img>
@@ -86,6 +86,7 @@ onMounted(() => {
 })
 </script>
 
+<style scoped>
 .detail-skeleton {
   max-width: 50rem;
   margin: 0 auto;
@@ -102,7 +103,11 @@ onMounted(() => {
 
 .detail-image-col {
   overflow: hidden;
-  background: var(--bg-offset);
+  background: #FAF7F2;
+}
+
+.detail-image {
+  background: #FAF7F2;
 }
 
 .detail-info-col {
@@ -132,3 +137,4 @@ onMounted(() => {
   color: var(--text-secondary);
   margin-bottom: 2.5rem;
 }
+</style>

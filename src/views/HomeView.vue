@@ -20,7 +20,7 @@
       </div>
     </section>
 
-    <v-container style="max-width: 1280px;" class="mx-auto px-4 py-8">
+    <v-container style="max-width: 1280px; margin: 0 auto;" class="px-4 py-8">
       <!-- ── Products Section ── -->
       <section id="products-section" class="products-section">
         <div class="section-header reveal-on-scroll">

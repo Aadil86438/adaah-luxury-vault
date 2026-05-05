@@ -1,6 +1,6 @@
 <template>
   <v-container fluid class="pa-0">
-    <v-container style="max-width: 1280px;" class="px-4 py-8 admin-container">
+    <v-container style="max-width: 1280px; margin: 0 auto;" class="px-4 py-8 admin-container">
       <!-- Page Header -->
       <div class="admin-header">
         <div>

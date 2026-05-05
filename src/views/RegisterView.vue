@@ -1,6 +1,6 @@
 <template>
   <v-container fluid class="pa-0 fill-height">
-    <v-container style="max-width: 1280px;" class="px-4 py-8 fill-height">
+    <v-container style="max-width: 1280px; margin: 0 auto;" class="px-4 py-8 fill-height">
       <v-row align="center" justify="center" class="fill-height">
         <v-col cols="12" sm="8" md="6" lg="5" xl="4">
           <v-card width="100%" class="premium-card pa-8 border" flat color="white" rounded="lg">
