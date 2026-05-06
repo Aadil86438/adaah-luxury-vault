@@ -189,7 +189,7 @@ const placeOrder = async () => {
     const lMessage = `✨ ADAH JEWELRY — ORDER CONFIRMED ✨\n\n📦 ORDER ITEMS:${lItemLines}\n\n💰 Grand Total: ₹${lTotal.toLocaleString('en-IN')}\n\n👤 Customer: ${customerName.value.trim()}\n📞 Contact: +91 ${customerPhone.value.replace(/(\d{5})(\d{5})/, '$1 $2')}\n📅 Order Date: ${lDate}\n\nThank you for choosing Adah 💎\nYour order will be processed soon!`
 
     // Open WhatsApp
-    window.open(`https://wa.me/918643839796?text=${encodeURIComponent(lMessage)}`, '_blank')
+    window.open(`https://wa.me/91960096000?text=${encodeURIComponent(lMessage)}`, '_blank')
 
     // Clear cart ONLY after successful DB write
     store.dispatch('cart/clearCart')

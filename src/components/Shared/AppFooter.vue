@@ -33,12 +33,12 @@
         </v-col>
 
         <!-- Contact Column -->
-        <v-col cols="6" md="3" class="footer-link-col">
+        <!-- <v-col cols="6" md="3" class="footer-link-col">
           <h4 class="footer-heading luxury-label">Contact</h4>
           <ul class="footer-links">
             <li class="footer-link-static">hello@adaah.com</li>
           </ul>
-        </v-col>
+        </v-col> -->
       </v-row>
 
       <div class="footer-divider" />

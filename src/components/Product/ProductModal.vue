@@ -214,7 +214,7 @@ const placeOrder = () => {
     const lTotal = totalPrice.value.toLocaleString('en-IN')
     const lQtyLine = quantity.value > 1 ? `\n📊 Quantity: ${quantity.value} × ₹${lUnitPrice}` : ''
     const lMessage = `✨ ADAH JEWELRY — ORDER CONFIRMED ✨\n\n📦 Product: ${product.value.name}${lQtyLine}\n💰 Total: ₹${lTotal}\n\n👤 Customer: ${customerName.value}\n📞 Contact: +91 ${customerPhone.value.replace(/(\d{5})(\d{5})/, '$1 $2')}\n📅 Order Date: ${lDate}\n\nThank you for choosing Adah 💎\nYour order will be processed soon!`
-    window.open(`https://wa.me/918643839796?text=${encodeURIComponent(lMessage)}`, '_blank')
+    window.open(`https://wa.me/917358164292?text=${encodeURIComponent(lMessage)}`, '_blank')
     show.value = false
   }).catch((pError) => {
     store.dispatch('snackbar/show', { text: pError.message || 'Failed to place order', color: 'error' })
