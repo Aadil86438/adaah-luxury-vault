@@ -31,8 +31,20 @@
         >Dashboard</router-link>
       </nav>
 
+      <!-- Cart Icon -->
+      <v-btn icon variant="text" class="ml-2 cart-nav-btn" @click="openCart" aria-label="Open cart">
+        <v-badge
+          :content="cartCount"
+          :model-value="cartCount > 0"
+          color="primary"
+          class="cart-badge"
+        >
+          <v-icon size="22">mdi-shopping-outline</v-icon>
+        </v-badge>
+      </v-btn>
+
       <!-- Theme Toggle -->
-      <ThemeToggle class="ml-2" />
+      <ThemeToggle class="ml-1" />
 
       <!-- User Menu -->
       <v-menu v-if="isAuthenticated" location="bottom end" :offset="8">
@@ -65,6 +77,11 @@
           <v-icon size="18">mdi-home-outline</v-icon>
           <span>Home</span>
         </router-link>
+        <button class="drawer-link" @click="openCartFromDrawer">
+          <v-icon size="18">mdi-shopping-outline</v-icon>
+          <span>Cart</span>
+          <span v-if="cartCount > 0" class="drawer-cart-badge">{{ cartCount }}</span>
+        </button>
         <router-link
           v-if="!isAuthenticated"
           to="/login"
@@ -109,10 +126,23 @@ const drawer = ref(false)
 const isAuthenticated = computed(() => store.getters['auth/isAuthenticated'])
 const isAdmin = computed(() => store.getters['auth/isAdmin'])
 const userEmail = computed(() => store.getters['auth/userEmail'] || '')
+const cartCount = computed(() => store.getters['cart/cartCount'])
 
 const handleLogout = () => {
   drawer.value = false
   store.dispatch('auth/logout').then(() => router.push('/login'))
+}
+
+const openCart = () => {
+  store.dispatch('cart/openDrawer')
+}
+
+const openCartFromDrawer = () => {
+  drawer.value = false
+  // Small delay so mobile drawer closes first
+  setTimeout(() => {
+    store.dispatch('cart/openDrawer')
+  }, 200)
 }
 </script>
 
@@ -140,6 +170,19 @@ const handleLogout = () => {
 
 .navbar-icon-btn {
   color: var(--text-primary) !important;
+}
+
+/* ── Cart Nav Button ── */
+.cart-nav-btn {
+  color: var(--text-primary) !important;
+}
+
+.cart-badge :deep(.v-badge__badge) {
+  font-size: 0.65rem;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
 }
 
 /* ── User Avatar ── */
@@ -217,6 +260,20 @@ const handleLogout = () => {
 .drawer-link:hover {
   background: var(--primary-muted);
   color: var(--primary-hover);
+}
+
+.drawer-cart-badge {
+  margin-left: auto;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .drawer-logout {

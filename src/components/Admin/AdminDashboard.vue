@@ -41,22 +41,52 @@ const stats = ref([
 const recentItems = ref([])
 
 const fetchStats = () => {
+  // Products stats
   SupabaseService.getProducts().then(({ data }) => {
     stats.value[0].value = data?.length || 0
     stats.value[1].value = data?.filter(p => p.is_active).length || 0
-  })
-  SupabaseService.getOrders().then(({ data }) => {
-    stats.value[2].value = data?.length || 0
-    const lRevenue = data?.reduce((acc, curr) => acc + parseFloat(curr.total_price || curr.price), 0) || 0
-    stats.value[3].value = `₹${lRevenue.toLocaleString('en-IN')}`
-    recentItems.value = data?.slice(0, 5).map(o => ({
-      title: `Order from ${o.user_name}`,
-      time: new Date(o.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
-      amount: `₹${parseFloat(o.total_price || o.price).toLocaleString('en-IN')}`,
-      icon: 'mdi-account-circle-outline',
-      color: 'primary'
-    })) || []
-  })
+  }).catch(() => {})
+
+  // Orders stats — handles both legacy + new format
+  SupabaseService.getOrdersWithItems().then(({ data }) => {
+    if (!data) return
+
+    stats.value[2].value = data.length
+
+    let lTotalRevenue = 0
+    data.forEach(order => {
+      const lHasItems = order.order_items && order.order_items.length > 0
+      if (lHasItems) {
+        // New format: sum from order_items
+        lTotalRevenue += order.order_items.reduce((acc, item) => acc + parseFloat(item.subtotal || 0), 0)
+      } else {
+        // Legacy format: use total_price or price field
+        lTotalRevenue += parseFloat(order.total_amount || order.total_price || order.price || 0)
+      }
+    })
+    stats.value[3].value = `₹${lTotalRevenue.toLocaleString('en-IN')}`
+
+    // Recent activity
+    recentItems.value = data.slice(0, 5).map(o => {
+      const lName = o.customer_name || o.user_name || 'Customer'
+      const lHasItems = o.order_items && o.order_items.length > 0
+      let lAmount = 0
+      if (lHasItems) {
+        lAmount = o.order_items.reduce((acc, item) => acc + parseFloat(item.subtotal || 0), 0)
+      } else {
+        lAmount = parseFloat(o.total_amount || o.total_price || o.price || 0)
+      }
+      const lItemCount = lHasItems ? o.order_items.reduce((acc, item) => acc + (item.quantity || 1), 0) : (o.quantity || 1)
+
+      return {
+        title: `Order from ${lName}${lItemCount > 1 ? ` (${lItemCount} items)` : ''}`,
+        time: new Date(o.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
+        amount: `₹${lAmount.toLocaleString('en-IN')}`,
+        icon: 'mdi-account-circle-outline',
+        color: 'primary'
+      }
+    })
+  }).catch(() => {})
 }
 
 onMounted(() => { fetchStats() })

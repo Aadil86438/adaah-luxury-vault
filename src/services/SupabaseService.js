@@ -100,5 +100,63 @@ export const SupabaseService = {
       .from('orders')
       .select('*')
       .order('created_at', { ascending: false })
+  },
+
+  /**
+   * Create an order with multiple items atomically.
+   * 1. Insert into orders → get back the id
+   * 2. Insert all order_items with that order_id
+   * Returns { order, items } on success.
+   */
+  async createOrderWithItems(pOrderData, pItems) {
+    // Step 1: Create the order row
+    const { data: lOrder, error: lOrderError } = await supabase
+      .from('orders')
+      .insert([{
+        customer_name: pOrderData.customer_name,
+        phone: pOrderData.phone,
+        total_amount: pOrderData.total_amount
+      }])
+      .select()
+      .single()
+
+    if (lOrderError) throw lOrderError
+    if (!lOrder) throw new Error('Order creation returned no data')
+
+    // Step 2: Create order_items linked to the new order
+    const lItemsPayload = pItems.map(item => ({
+      order_id: lOrder.id,
+      product_id: item.id || null,
+      product_name: item.name,
+      price: parseFloat(item.price),
+      quantity: item.quantity,
+      subtotal: parseFloat(item.price) * item.quantity
+    }))
+
+    const { data: lItems, error: lItemsError } = await supabase
+      .from('order_items')
+      .insert(lItemsPayload)
+      .select()
+
+    if (lItemsError) throw lItemsError
+
+    return { order: lOrder, items: lItems }
+  },
+
+  /** Fetch order_items for a specific order */
+  getOrderItems(pOrderId) {
+    return supabase
+      .from('order_items')
+      .select('*')
+      .eq('order_id', pOrderId)
+      .order('created_at', { ascending: true })
+  },
+
+  /** Fetch all orders with their items (for admin) */
+  getOrdersWithItems() {
+    return supabase
+      .from('orders')
+      .select('*, order_items(*)')
+      .order('created_at', { ascending: false })
   }
 }

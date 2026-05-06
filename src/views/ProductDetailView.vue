@@ -29,16 +29,29 @@
               {{ product.description }}
             </p>
 
-            <v-btn
-              color="primary"
-              variant="flat"
-              block
-              size="large"
-              class="rounded-pill luxury-text"
-              @click="openOrderModal"
-            >
-              Order via WhatsApp 💎
-            </v-btn>
+            <div class="detail-btn-group">
+              <v-btn
+                color="primary"
+                variant="flat"
+                block
+                size="large"
+                class="rounded-pill luxury-text"
+                @click="openOrderModal"
+              >
+                Order via WhatsApp 💎
+              </v-btn>
+              <v-btn
+                variant="outlined"
+                color="primary"
+                block
+                size="large"
+                class="rounded-pill luxury-text"
+                @click="addToCart"
+              >
+                <v-icon size="20" class="mr-1">mdi-cart-plus</v-icon>
+                Add to Cart
+              </v-btn>
+            </div>
           </v-col>
         </v-row>
       </v-card>
@@ -51,11 +64,13 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import { supabase } from '../services/SupabaseService'
 import ProductModal from '../components/Product/ProductModal.vue'
 
 const route = useRoute()
 const router = useRouter()
+const store = useStore()
 const product = ref(null)
 const loading = ref(true)
 const productModal = ref(null)
@@ -79,6 +94,18 @@ const fetchProduct = () => {
 
 const openOrderModal = () => {
   productModal.value.open(product.value)
+}
+
+const addToCart = () => {
+  if (!product.value) return
+  store.dispatch('cart/addItem', {
+    id: product.value.id,
+    name: product.value.name,
+    price: product.value.price,
+    image_url: product.value.image_url,
+    category: product.value.category,
+    quantity: 1
+  })
 }
 
 onMounted(() => {
@@ -136,5 +163,11 @@ onMounted(() => {
   line-height: 2;
   color: var(--text-secondary);
   margin-bottom: 2.5rem;
+}
+
+.detail-btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 </style>

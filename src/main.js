@@ -12,5 +12,6 @@ app.use(store)
 app.use(vuetify)
 
 store.dispatch('auth/initialize')
+store.dispatch('cart/initialize')
 
 app.mount('#app')

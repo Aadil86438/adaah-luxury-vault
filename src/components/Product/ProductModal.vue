@@ -85,36 +85,56 @@
               autocomplete="tel"
               @input="sanitizePhone"
             />
-            <!-- Desktop Order Button -->
-            <button
-              type="submit"
-              class="btn-terra modal-order-btn d-none d-md-block"
-              :class="{ disabled: !formValid || loading }"
-              :disabled="!formValid || loading"
-            >
-              <span v-if="loading" class="btn-loading">
-                <v-progress-circular size="16" width="2" indeterminate color="white" /> Opening WhatsApp…
-              </span>
-              <span v-else>Shop Now 🛍</span>
-            </button>
+            <!-- Desktop Buttons -->
+            <div class="modal-btn-group d-none d-md-flex">
+              <button
+                type="submit"
+                class="btn-terra modal-order-btn"
+                :class="{ disabled: !formValid || loading }"
+                :disabled="!formValid || loading"
+              >
+                <span v-if="loading" class="btn-loading">
+                  <v-progress-circular size="16" width="2" indeterminate color="white" /> Opening WhatsApp…
+                </span>
+                <span v-else>Shop Now 🛍</span>
+              </button>
+              <button
+                type="button"
+                class="btn-outline modal-cart-btn"
+                @click="addToCart"
+              >
+                <v-icon size="18" class="mr-1">mdi-cart-plus</v-icon>
+                Add to Cart
+              </button>
+            </div>
           </v-form>
         </v-col>
       </v-row>
 
       <!-- Mobile Sticky Footer -->
       <div class="modal-sticky-footer d-md-none">
-        <button
-          type="button"
-          class="btn-terra modal-order-btn"
-          :class="{ disabled: !formValid || loading }"
-          :disabled="!formValid || loading"
-          @click="placeOrder"
-        >
-          <span v-if="loading" class="btn-loading">
-            <v-progress-circular size="16" width="2" indeterminate color="white" /> Opening WhatsApp…
-          </span>
-          <span v-else>Shop Now 🛍</span>
-        </button>
+        <div class="modal-btn-group-mobile">
+          <button
+            type="button"
+            class="btn-terra modal-order-btn"
+            :class="{ disabled: !formValid || loading }"
+            :disabled="!formValid || loading"
+            @click="placeOrder"
+          >
+            <span v-if="loading" class="btn-loading">
+              <v-progress-circular size="16" width="2" indeterminate color="white" /> Opening WhatsApp…
+            </span>
+            <span v-else>Shop Now 🛍</span>
+          </button>
+          <button
+            type="button"
+            class="btn-outline modal-cart-btn"
+            @click="addToCart"
+          >
+            <v-icon size="18" class="mr-1">mdi-cart-plus</v-icon>
+            Add to Cart
+          </button>
+        </div>
       </div>
     </v-card>
   </v-dialog>
@@ -199,6 +219,19 @@ const placeOrder = () => {
   }).catch((pError) => {
     store.dispatch('snackbar/show', { text: pError.message || 'Failed to place order', color: 'error' })
   }).finally(() => { loading.value = false })
+}
+
+const addToCart = () => {
+  if (!product.value) return
+  store.dispatch('cart/addItem', {
+    id: product.value.id,
+    name: product.value.name,
+    price: product.value.price,
+    image_url: product.value.image_url,
+    category: product.value.category,
+    quantity: quantity.value
+  })
+  show.value = false
 }
 
 defineExpose({ open })
@@ -395,12 +428,37 @@ defineExpose({ open })
 }
 
 .modal-order-btn {
-  width: 100%;
+  flex: 1;
   text-align: center;
   padding: 0.875rem 1.75rem !important;
   border-radius: var(--radius-md) !important;
   font-size: 0.95rem;
   box-sizing: border-box;
+}
+
+.modal-btn-group {
+  display: flex;
+  gap: 0.625rem;
+  width: 100%;
+}
+
+.modal-btn-group-mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.modal-cart-btn {
+  flex: 1;
+  text-align: center;
+  padding: 0.75rem 1rem !important;
+  border-radius: var(--radius-md) !important;
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 .modal-order-btn.disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
 .btn-loading { display: flex; align-items: center; gap: 0.625rem; justify-content: center; }

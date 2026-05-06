@@ -13,20 +13,29 @@
     <AppFooter />
     <AppSnackbar />
     <LoaderOverlay :loading="authLoading" />
+    <CartDrawer @checkout="openCheckout" />
+    <CheckoutDialog ref="checkoutDialog" />
   </v-app>
 </template>
 
 <script setup>
-import { computed, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import AppNavbar from './components/Shared/AppNavbar.vue'
 import AppFooter from './components/Shared/AppFooter.vue'
 import AppSnackbar from './components/Shared/AppSnackbar.vue'
 import LoaderOverlay from './components/Shared/LoaderOverlay.vue'
+import CartDrawer from './components/Cart/CartDrawer.vue'
+import CheckoutDialog from './components/Cart/CheckoutDialog.vue'
 
 const store = useStore()
 const darkMode = computed(() => store.state.theme.darkMode)
 const authLoading = computed(() => store.state.auth.loading)
+const checkoutDialog = ref(null)
+
+const openCheckout = () => {
+  checkoutDialog.value?.open()
+}
 
 // ── CSS Variable Bridge ──────────────────────────────────────
 // Syncs Vuex theme state → html.dark-mode class
@@ -65,3 +74,4 @@ watch(darkMode, (isDark) => applyThemeClass(isDark))
   font-family: var(--font-sans, 'DM Sans', sans-serif) !important;
 }
 </style>
+
