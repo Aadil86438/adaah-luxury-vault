@@ -1,7 +1,7 @@
 <template>
   <!-- ── Product Order Modal ── -->
   <v-dialog v-model="show" max-width="860" scrim="rgba(30,15,10,0.65)">
-    <v-card v-if="product" class="modal-root" rounded="xl" color="white">
+    <v-card v-if="product" class="modal-root" rounded="xl">
       <v-row no-gutters>
         <!-- Image Column -->
         <v-col cols="12" md="5" class="modal-image-col">
@@ -12,7 +12,7 @@
             :aspect-ratio="4/5"
           >
             <template v-slot:placeholder>
-              <div class="d-flex align-center justify-center fill-height" style="background: #FAF7F2;">
+              <div class="d-flex align-center justify-center fill-height" style="background: var(--bg);">
                 <v-progress-circular indeterminate color="primary" size="32" width="2" />
               </div>
             </template>
@@ -214,7 +214,7 @@ const placeOrder = () => {
     const lTotal = totalPrice.value.toLocaleString('en-IN')
     const lQtyLine = quantity.value > 1 ? `\n📊 Quantity: ${quantity.value} × ₹${lUnitPrice}` : ''
     const lMessage = `✨ ADAH JEWELRY — ORDER CONFIRMED ✨\n\n📦 Product: ${product.value.name}${lQtyLine}\n💰 Total: ₹${lTotal}\n\n👤 Customer: ${customerName.value}\n📞 Contact: +91 ${customerPhone.value.replace(/(\d{5})(\d{5})/, '$1 $2')}\n📅 Order Date: ${lDate}\n\nThank you for choosing Adah 💎\nYour order will be processed soon!`
-    window.open(`https://wa.me/917358164292?text=${encodeURIComponent(lMessage)}`, '_blank')
+    window.open(`https://wa.me/918643839796?text=${encodeURIComponent(lMessage)}`, '_blank')
     show.value = false
   }).catch((pError) => {
     store.dispatch('snackbar/show', { text: pError.message || 'Failed to place order', color: 'error' })
@@ -240,7 +240,7 @@ defineExpose({ open })
 <style scoped>
 /* ── Modal Root ── */
 .modal-root {
-  background: white;
+  background: var(--card);
   border-radius: var(--radius-xl);
   overflow: hidden;
   position: relative;
@@ -250,13 +250,13 @@ defineExpose({ open })
 /* ── Image Column ── */
 .modal-image-col {
   overflow: hidden;
-  background: #FAF7F2;
+  background: var(--bg);
   position: relative;
 }
 
 .modal-image {
   width: 100%;
-  background: #FAF7F2;
+  background: var(--bg);
 }
 
 /* View Full Image Button */
@@ -287,7 +287,7 @@ defineExpose({ open })
 
 /* ── Detail Column ── */
 .modal-detail-col {
-  background: white;
+  background: var(--card);
   display: flex;
   flex-direction: column;
   color: var(--text-primary);
@@ -393,7 +393,7 @@ defineExpose({ open })
   border-left: 1.5px solid var(--border);
   border-right: 1.5px solid var(--border);
   line-height: 2.25rem;
-  background: white;
+  background: var(--card);
 }
 
 .qty-total {
@@ -466,7 +466,7 @@ defineExpose({ open })
 /* ── Mobile Sticky Footer ── */
 .modal-sticky-footer {
   padding: 1rem 1.25rem;
-  background: white;
+  background: var(--card);
   border-top: 1px solid var(--border);
   flex-shrink: 0;
 }
@@ -490,7 +490,7 @@ defineExpose({ open })
 
 .full-image-view {
   border-radius: var(--radius-lg);
-  background: #FAF7F2;
+  background: var(--bg);
 }
 
 /* ── Mobile: Stack Layout ── */

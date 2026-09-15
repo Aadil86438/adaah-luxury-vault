@@ -127,7 +127,7 @@ onMounted(() => {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: rgba(255, 255, 255, 0.75); /* required: white overlay */
+  background: var(--hero-overlay, rgba(255, 255, 255, 0.75));
   pointer-events: none;
 }
 
@@ -160,7 +160,7 @@ onMounted(() => {
   font-size: clamp(2.6rem, 5vw, 4.4rem);
   line-height: 1.1;
   font-weight: 500;
-  color: #3D3228;
+  color: var(--text-primary);
   letter-spacing: -0.02em;
 }
 

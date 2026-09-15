@@ -238,7 +238,7 @@ const proceedToCheckout = () => {
   height: 4rem;
   border-radius: var(--radius-sm);
   overflow: hidden;
-  background: #FAF7F2;
+  background: var(--bg);
   border: 1px solid var(--border);
   flex-shrink: 0;
 }
@@ -329,7 +329,7 @@ const proceedToCheckout = () => {
   border-left: 1.5px solid var(--border);
   border-right: 1.5px solid var(--border);
   line-height: 1.75rem;
-  background: white;
+  background: var(--card);
 }
 
 .cart-item-subtotal {

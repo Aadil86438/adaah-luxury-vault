@@ -2,7 +2,7 @@
   <div>
     <v-row class="mb-8">
       <v-col v-for="stat in stats" :key="stat.title" cols="6" sm="6" md="3">
-        <v-card class="stat-card premium-card" flat color="white" rounded="lg">
+        <v-card class="stat-card premium-card" flat rounded="lg">
           <div class="stat-header">
             <span class="luxury-label stat-title">{{ stat.title }}</span>
             <div class="stat-icon-wrap" :style="{ background: stat.bgColor }">
@@ -93,14 +93,14 @@ onMounted(() => { fetchStats() })
 </script>
 
 <style scoped>
-.stat-card { padding: 1.75rem 1.5rem; cursor: default; background: white; }
+.stat-card { padding: 1.75rem 1.5rem; cursor: default; background: var(--card); }
 .stat-card:hover { transform: translateY(-3px) !important; }
 .stat-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
 .stat-title { color: var(--text-muted); }
 .stat-icon-wrap { width: 2.25rem; height: 2.25rem; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; }
 .stat-value { font-size: 2rem; color: var(--text-primary); line-height: 1; }
 .activity-heading { margin-bottom: 1.25rem; margin-top: 0.5rem; }
-.activity-card { cursor: default; padding: 0; overflow: hidden; background: white; }
+.activity-card { cursor: default; padding: 0; overflow: hidden; background: var(--card); }
 .activity-card:hover { transform: none !important; }
 .activity-empty { padding: 2.5rem; text-align: center; color: var(--text-muted); font-family: var(--font-sans); font-size: 0.9rem; }
 .activity-item { display: flex; align-items: center; gap: 1rem; padding: 1.125rem 1.5rem; border-bottom: 1px solid var(--border); transition: background var(--transition-fast); }

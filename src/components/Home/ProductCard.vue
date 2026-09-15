@@ -6,7 +6,7 @@
     role="button"
     :aria-label="`View ${product.name}`"
     width="100%"
-    color="white"
+    
     rounded="lg"
   >
     <div class="card-image-wrap">
@@ -63,7 +63,7 @@ const addToCart = () => {
 .card-image { transition: transform 0.58s cubic-bezier(0.4, 0, 0.2, 1); }
 .product-card:hover .card-image { transform: scale(1.06); }
 .sold-out-badge { position: absolute; top: 0.625rem; left: 0.625rem; background: rgba(250, 247, 242, 0.93); color: var(--primary-hover); font-family: var(--font-sans); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.75rem; border-radius: var(--radius-pill); border: 1px solid var(--border); }
-.card-info { padding: 1rem 1rem 1.25rem; background: white; border-radius: 0 0 var(--radius-lg) var(--radius-lg); flex: 1; display: flex; flex-direction: column; gap: 0.375rem; color: var(--text-primary); }
+.card-info { padding: 1rem 1rem 1.25rem; background: var(--card); border-radius: 0 0 var(--radius-lg) var(--radius-lg); flex: 1; display: flex; flex-direction: column; gap: 0.375rem; color: var(--text-primary); }
 .card-category { margin-bottom: 0.125rem; }
 .card-name { font-size: 1.15rem; font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; }
 .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 0.25rem; gap: 0.5rem; }
@@ -78,11 +78,11 @@ const addToCart = () => {
   width: 2.25rem;
   height: 2.25rem;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--bg-offset);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid var(--border);
-  color: var(--text-primary);
+  color: var(--primary-hover);
   display: flex;
   align-items: center;
   justify-content: center;

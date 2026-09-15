@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="show" max-width="600px" persistent>
-    <v-card class="form-card" rounded="xl" color="white">
+    <v-card class="form-card" rounded="xl">
       <div class="form-header">
         <h2 class="form-title serif-text">{{ editingProduct ? 'Edit Product' : 'New Product' }}</h2>
         <v-btn icon flat class="form-close-btn" @click="show = false" :disabled="loading">
@@ -109,7 +109,7 @@ defineExpose({ open })
 </script>
 
 <style scoped>
-.form-card { background: white; border-radius: var(--radius-xl); overflow: hidden; display: flex; flex-direction: column; max-height: 94vh; color: var(--text-primary); }
+.form-card { background: var(--card); border-radius: var(--radius-xl); overflow: hidden; display: flex; flex-direction: column; max-height: 94vh; color: var(--text-primary); }
 .form-header { display: flex; justify-content: space-between; align-items: center; padding: 1.75rem 2rem 0.5rem; flex-shrink: 0; }
 .form-title { font-size: 1.6rem; color: var(--text-primary); }
 .form-close-btn { background: var(--bg-offset) !important; color: var(--text-secondary) !important; border: 1px solid var(--border) !important; }

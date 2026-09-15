@@ -1,7 +1,7 @@
 <template>
   <!-- ── Checkout Dialog ── -->
   <v-dialog v-model="show" max-width="600" scrim="rgba(30,15,10,0.65)" persistent>
-    <v-card class="checkout-root" rounded="xl" color="white">
+    <v-card class="checkout-root" rounded="xl">
       <!-- Header -->
       <div class="checkout-header">
         <div>
@@ -189,7 +189,7 @@ const placeOrder = async () => {
     const lMessage = `✨ ADAH JEWELRY — ORDER CONFIRMED ✨\n\n📦 ORDER ITEMS:${lItemLines}\n\n💰 Grand Total: ₹${lTotal.toLocaleString('en-IN')}\n\n👤 Customer: ${customerName.value.trim()}\n📞 Contact: +91 ${customerPhone.value.replace(/(\d{5})(\d{5})/, '$1 $2')}\n📅 Order Date: ${lDate}\n\nThank you for choosing Adah 💎\nYour order will be processed soon!`
 
     // Open WhatsApp
-    window.open(`https://wa.me/917358164292?text=${encodeURIComponent(lMessage)}`, '_blank')
+    window.open(`https://wa.me/918643839796?text=${encodeURIComponent(lMessage)}`, '_blank')
 
     // Clear cart ONLY after successful DB write
     store.dispatch('cart/clearCart')
@@ -215,7 +215,7 @@ defineExpose({ open })
 <style scoped>
 /* ── Root ── */
 .checkout-root {
-  background: white;
+  background: var(--card);
   overflow: hidden;
   display: flex;
   flex-direction: column;

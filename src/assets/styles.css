@@ -34,6 +34,7 @@
   --shadow-lg:      0 14px 44px rgba(74, 63, 53, 0.14);
   --shadow-card:    0 4px 20px rgba(74, 63, 53, 0.07);
   --shadow-card-hover: 0 12px 40px rgba(74, 63, 53, 0.14);
+  --hero-overlay:   rgba(255, 255, 255, 0.75);
 
   /* Typography */
   --font-serif:     'Cormorant Garamond', 'Georgia', serif;
@@ -89,6 +90,7 @@ html.dark-mode {
   --shadow-card:    0 4px 20px rgba(0, 0, 0, 0.24);
   --shadow-card-hover: 0 12px 40px rgba(0, 0, 0, 0.40);
   --primary-muted:  rgba(230, 167, 155, 0.15);
+  --hero-overlay:   rgba(30, 30, 30, 0.80);
 }
 
 /* ============================================================

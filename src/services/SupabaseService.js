@@ -95,6 +95,7 @@ export const SupabaseService = {
       .insert([pOrder])
   },
 
+
   getOrders() {
     return supabase
       .from('orders')

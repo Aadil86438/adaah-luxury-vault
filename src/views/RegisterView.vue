@@ -3,7 +3,7 @@
     <v-container style="max-width: 1280px; margin: 0 auto;" class="px-4 py-8 fill-height">
       <v-row align="center" justify="center" class="fill-height">
         <v-col cols="12" sm="8" md="6" lg="5" xl="4">
-          <v-card width="100%" class="premium-card pa-8 border" flat color="white" rounded="lg">
+          <v-card width="100%" class="premium-card pa-8 border" flat rounded="lg">
             <div class="text-center mb-8">
               <h1 class="luxury-text mb-2">Create Account</h1>
               <p class="text-body-2 opacity-70">Join the Adaah luxury community</p>

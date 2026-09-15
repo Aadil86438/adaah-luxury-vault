@@ -123,7 +123,7 @@ const handleLogin = () => {
 .login-card {
   width: 100%;
   max-width: 26.25rem;
-  background: rgba(255, 255, 255, 0.88);
+  background: var(--card);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border);

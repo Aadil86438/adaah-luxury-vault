@@ -7,7 +7,7 @@
       </div>
 
       <!-- Product -->
-      <v-card v-else-if="product" class="detail-card premium-card" flat color="white" rounded="lg">
+      <v-card v-else-if="product" class="detail-card premium-card" flat rounded="lg">
         <v-row no-gutters>
           <v-col cols="12" md="6" class="detail-image-col">
             <v-img
@@ -130,11 +130,11 @@ onMounted(() => {
 
 .detail-image-col {
   overflow: hidden;
-  background: #FAF7F2;
+  background: var(--bg);
 }
 
 .detail-image {
-  background: #FAF7F2;
+  background: var(--bg);
 }
 
 .detail-info-col {
